@@ -1,0 +1,54 @@
+What is devops?
+Devops is a process of improving the application delivery by ensuring that there is a automation in place with 
+a code quality that is maintained and ensuring continuous monitoring and continuous testing in place.
+
+Why devops?
+It’s a culture that improves the organisations code/app quality, delivery, monitoring, automation and testing. Unlike 10 years ago.
+
+Environments:DEV, QA, SIT, UAT, PERF, PRE-PROD, PROD
+
+RHEL-9-DevOps-Practice
+
+Firewall:
+Incoming traffic -> inbound traffic ->don’t trust anyone.
+Outgoing traffic -> Outbound traffic -> allow everyone to exit.
+all traffic ports source -->0.0.0.0/0
+
+
+How to give sudo access to user?
+Ans:we have sudoers(/etc/sudoers) file where we can add,edit,delete acessess to users and also we can add user into wheel group.
+%wheel    ALL=(ALL)      ALL
+ramesh    ALL=(ALL)      ALL
+ramesh    ALL=(ALL)     /usr/bin/systemctl -->to give specific commands access 
+visudo -c -->to check the syntax if any issues in sudoers file post changes.
+
+If user left the organisation actions::
+1.Lock him immidiately --> usermod -L username
+2.Remove user from all groups -->gpasswd -d username groupname
+3.Take backup of his home /dir -->tar or Zip
+4.Delete the user -->userdel username
+
+
+Expense project::
+
+package.json -->this is called build file where devlopers mention dependencies and application details
+npm -->npm package manager -->build tool
+
+Libraries       Nodejs              java              python                     DotNET
+Extension      .js                 .java             .py 						 .net/.aspx
+Build file      pacakage.json       pom.xml           requirements.txt			 *.csproj
+Build tool     npm                 maven             pip						 nuget
+
+.service file -->/etc/systemd/system -->*.service
+
+
+Production Drill Session::
+1.Capacity issues -->CPU,RAM,Disk,Connections,Queue,IOps
+2.Config Drift -->Secrets,Routing,IAM roles
+3.Dependencies failing -->Upstream vs downstream(DB down,Cache,DNS,LB,Gateway)
+4.Deployment Issues -->Incompatible versions,schema mismatch,crash loops
+5.Process failures -->Manual mistakes,Missing alerts
+
+
+
+https://docs.google.com/document/d/1p_j3PQkpFsoX5A2ybJ5ip47QHNgDF3cYPd8KEwrVNOE/edit?usp=sharing

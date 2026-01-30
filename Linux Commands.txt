@@ -1,0 +1,1223 @@
+ssh-keygen -f bala -->to generate public and private key.
+ssh -i <private-key>   user-name@ip -->to connect server manually.
+ssh -i bala ec2-user@54.159.73.235 
+scp -i <private-key> file-name ec2-user@ip:/home/ec2-user/bala/ -->copy files from one server to another server.
+
+Absolute path -->Full path like from scratch
+Relative path -->Current path 
+
+$ -->normal user
+# -->super user
+
+date → Displays the current system date and time
+
+cal → Shows the current month calendar
+
+cal 5 1999 → Displays calendar for a specific month and year
+
+uptime → Shows how long the system has been running and load average
+
+uname -a → Displays complete operating system information
+
+hostname → Displays the system hostname
+
+hostnamectl → Displays and manages hostname information (needs subcommands to modify)
+
+whoami → Displays the currently logged-in user
+
+who / w → Displays users currently logged into the system
+
+last → Displays login history of users
+
+Ctrl + C → Stops the currently running command
+
+Ctrl + Z → Suspends (pauses) the running process
+
+Ctrl + L → Clears the terminal screen
+
+clear → Clears the terminal screen
+
+history → Displays previously executed commands
+
+history | tail → Displays the most recent commands from history
+
+!! → Executes the last command again (use carefully)
+
+!number → Executes a specific command from history
+
+watch command → Runs a command repeatedly every 2 seconds
+
+watch -n 1 command → Runs a command every 1 second
+
+time command → Displays execution time of a command
+
+ulimit -a → Displays all system resource limits
+
+ulimit -n → Displays maximum open file limit
+
+which command → Displays the path of the command executable
+
+whereis command → Displays binary, source, and man page locations
+
+man command → Displays the manual page of a command
+
+openssl rand -base64 10 → Generates a random password string
+
+truncate -s 0 file → Clears the content of a file without deleting it
+
+> file → Empties a file immediately (use carefully)
+
+sudo -l → Displays sudo permissions for the current user.
+
+touch file → Creates an empty file
+
+touch file1 file2 file3 → Creates multiple empty files
+
+touch {1..100} → Creates files from 1 to 100 using shell expansion
+
+cat > file → Creates or overwrites a file and allows entering content
+
+cat >> file → Appends content to a file (creates file if not present)
+
+Ctrl + D → Saves input and exits from file creation
+
+cat file → Displays the entire content of a file
+
+cat -n file → Displays file content with line numbers
+
+less file → Displays file content page by page (recommended for large files)
+
+more file → Displays file content page by page (basic viewer)
+
+head file → Displays the first 10 lines of a file
+
+head -n 5 file → Displays the first 5 lines of a file
+
+tail file → Displays the last 10 lines of a file
+
+tail -n 20 file → Displays the last 20 lines of a file
+
+tail -f file → Displays live updates of a growing file (commonly used for logs)
+
+nl file → Displays file content with line numbers for non-empty lines.
+
+wc file → Displays line, word, and byte count of a file
+
+wc -l file → Displays number of lines in a file
+
+wc -w file → Displays number of words in a file
+
+wc -c file → Displays number of char in a file
+
+ls → Lists files and directories in the current directory
+
+ls -l → Lists files with permissions, owner, group, size, and timestamp
+
+ls -a → Lists all files including hidden files (starting with .)
+
+ls -lh → Lists files with human-readable sizes (KB, MB, GB)
+
+pwd → Displays the full path of the current working directory
+
+cd dir → Changes directory to dir
+
+cd .. → Moves one level up from the current directory
+
+cd - → Switches back to the previous working directory
+
+cd / → Changes directory to the root directory
+
+mkdir dir → Creates a new directory
+
+mkdir -p dir/subdir → Creates parent and subdirectories if they do not exist
+
+rmdir dir → Deletes an empty directory only
+
+rm file → Deletes a file
+
+rm -r dir → Deletes a directory and its contents recursively
+
+rm -rf dir → Force deletes a directory and its contents without confirmation (dangerous)
+
+cp file dest → Copies a file to a destination
+
+cp -r dir dest → Copies a directory and its contents recursively
+
+cp -p file dest → Copies a file while preserving permissions, ownership, and timestamps
+
+mv file dest → Moves or renames a file or directory
+
+stat file → Displays detailed metadata of a file (size, permissions, timestamps)
+
+tree dir → Displays directory structure in tree format (if installed)
+
+Links (Hard & Soft)::
+=====================
+
+ln file hardlink → Creates a hard link pointing to the same inode as the original file
+
+ln -s file softlink → Creates a soft (symbolic) link that points to the file path
+
+ls -li file → Displays inode number and hard-link count
+
+stat file → Shows detailed inode information and number of links
+
+readlink softlink → Displays the target path of a soft link
+
+unlink file → Removes a file or a link (same effect as rm for a single file)
+
+🔹Hard Link 
+
+Uses the same inode number as the original file
+Changes made via any link affect the same data
+Cannot be created for directories (normal users)
+Cannot span across different filesystems
+File exists until all hard links are removed
+
+🔹Soft Link 
+
+Has a different inode number
+Points to the file path, not the inode
+Can link files and directories
+Can cross filesystems
+Becomes broken if the original file is deleted.
+
+Permissions (chmod, chown, umask)::
+===================================
+r = 4 → Read
+w = 2 → Write
+x = 1 → Execute
+
+chmod 755 file → Sets permissions: owner (rwx), group (r-x), others (r-x)
+
+chmod 644 file → Sets permissions: owner (rw-), group (r--), others (r--)
+
+chmod u+x file → Adds execute permission to the owner
+
+chmod g-w file → Removes write permission from the group
+
+chmod o+r file → Adds read permission to others
+
+chmod -R 755 dir → Recursively applies permissions to a directory and its contents
+
+chown user file → Changes the file owner
+
+chown user:group file → Changes both owner and group
+
+chown -R user:group dir → Recursively changes ownership of directory contents
+
+umask → Displays the current default permission mask
+
+umask 022 → Sets default permissions (new files: 644, new directories: 755)
+
+ACL (Access Control Lists)::
+============================
+
+getfacl file → Displays ACL permissions for a file or directory
+
+setfacl -m u:user:rwx file → Grants read, write, and execute permissions to a user
+
+setfacl -m g:group:rx file → Grants read and execute permissions to a group
+
+setfacl -m o::r-- file → Sets read-only permission for others via ACL
+
+setfacl -x u:user file → Removes ACL entry for a specific user
+
+setfacl -b file → Removes all ACL entries from a file
+
+setfacl -d -m u:user:rwx dir → Sets default ACL so new files inherit permissions
+
+🔹ACL Key Points::
+ACL provides additional permissions beyond standard chmod
+ACL works along with basic permissions (not a full replacement)
+Effective permissions depend on both ACL and standard permissions
+ACL is useful when multiple users need different access levels.
+
+FIND Command::
+==============
+
+find . -mtime +50 -type f -name "DETECT_FILE" -exec rm {} \; (or) find . -mtime +50 -type f -name "DETECT_FILE" -exec rm {} + (or)
+
+find . -mtime +50 -type f -name "DETECT_FILE" -delete ; → Deletes files named DETECT_FILE modified more than 50 days ago
+
+find . -atime +7 -type f -name "*.log" → Finds files accessed more than 7 days ago
+
+find . -mtime +50 -type f -name "xyz.log" -exec gzip {} ; → Compresses xyz.log files modified more than 50 days ago
+
+find . -mtime +50 -type f -name "xyz.log" | xargs gzip → Alternative way to compress xyz.log files (handles multiple files)
+
+find . -amin +10 -type f -name "xyz.log" → Finds files accessed more than 10 minutes ago
+
+find . -mmin +30 -type f -name "xyz.log" → Finds files modified more than 30 minutes ago
+
+find . -cmin +30 -type f -name "xyz.log" → Finds files with metadata changes (permissions/ownership) in last 30 minutes
+
+find . -name "xyz.log" → Finds files named xyz.log (case-sensitive)
+
+find . -iname "xyz.log" → Finds files named xyz.log (case-insensitive)
+
+find . -type f -name "xyz.log" → Finds regular files named xyz.log
+
+find . -name "*.log" -o -name "abc.log" → Finds files matching *.log or abc.log
+
+find . -type d -name "logs" → Finds directories named logs
+
+find . -perm 777 -name "run.sh" → Finds run.sh files with 777 permissions
+
+find . -user krishna → Finds files owned by user krishna
+
+find . -type f -empty → Finds empty files
+
+find . -type d -empty → Finds empty directories
+
+find . -type f -links +1 → Finds files with more than 1 link
+
+find . -type f -size +1G → Finds files larger than 1 GB
+
+find . -type f -size +1M → Finds files larger than 1 MB
+
+find . -type f -size +1K → Finds files larger than 1 KB
+
+find . -type f -name "xyz.log" -exec chmod 755 {} ; → Changes permissions of xyz.log files to 755
+
+find . -type f -printf "%f\n" > filenames.txt → Copies only file names to a file
+
+find . -type f -printf "%f\n" | sort | uniq → Copies file names to a file without duplicates
+
+find . -maxdepth 1 -type f → Shows only files in the current directory
+
+find . -mindepth 2 -type f → Skips current directory and shows files 2 levels below
+
+-mtime = modified time               -atime = accessed time                                         -ctime = Metadata changes
+-mmin = modified in minutes          -amin = accessed in minutes                                    -cmin = metadata changes in minutes
+-name = shows name                   -iname = ignore case sensitive                                 -perm = shows permission
+-user = shows users                  -empty = shows empty file/dir                                  -size = shows size of file/dir in GB/MB/KB
+-links = shows link files            -maxdepth = shows current dir files                            -mindepth = Shows 2 levels below files
+
+%p → full path , %f → file name , %h → directory path , %s → size in bytes
+
+
+Grep Commands::
+===============
+
+grep "error" file → Searches for the word error in a file
+
+grep -i "error" file → Searches for error without case sensitivity
+
+grep -r "error" dir/ → Searches recursively inside all files in a directory
+
+grep -c "error" file → Counts number of matching lines
+
+grep -v "error" file → Displays lines that do NOT contain error
+
+grep -n "error" file → Displays matching lines with line numbers
+
+grep -A 2 "error" file → Shows 2 lines AFTER the matching line
+
+grep -B 3 "error" file → Shows 3 lines BEFORE the matching line
+
+grep -C 3 "error" file → Shows 3 lines BEFORE and AFTER the match
+
+grep "^error" file → Displays lines that start with error
+
+grep "error$" file → Displays lines that end with error
+
+grep "[0-9]" file → Displays lines containing any digit.
+
+
+sed Commands(Stream Editor)::
+==============================
+
+sed 's/error/warn/' file → Replaces the first occurrence of error with warn in each line
+
+sed 's/error/warn/g' file → Replaces all occurrences of error with warn in each line
+
+sed -i 's/error/warn/g' file → Replaces text directly in the file (in-place edit)
+
+sed -i.bak 's/error/warn/g' file → Replaces text and creates a backup file
+
+sed '2s/error/warn/' file → Replaces error with warn only on line number 2
+
+sed '2,5s/error/warn/g' file → Replaces text from line 2 to line 5
+
+sed '/error/s/warn/info/' file → Replaces warn with info only in lines that contain error
+
+sed '/error/d' file → Deletes all lines containing error
+
+sed '2d' file → Deletes line number 2
+
+sed '2,5d' file → Deletes lines from line 2 to line 5
+
+sed 's/^/START: /' file → Adds text at the beginning of each line
+
+sed 's/$/ :END/' file → Adds text at the end of each line
+
+sed -n '5p' file → Prints only line number 5
+
+sed -n '1,10p' file → Prints lines from 1 to 10 only.
+
+
+awk Commands::awk is mainly used for column-based text processing.
+======================================================================
+
+awk '{print}' file → Prints every line from the file
+
+awk '{print $1}' file → Prints the first column
+
+awk '{print $1, $3}' file → Prints the first and third columns
+
+awk '{print NF}' file → Prints number of fields in each line
+
+awk '{print NR}' file → Prints line number for each line
+
+awk '{print $0}' file → Prints the entire line (default behavior)
+
+awk '/error/ {print}' file → Prints lines that contain error
+
+awk '$3 > 100' file → Prints lines where the third column value is greater than 100
+
+awk '{sum += $3} END {print sum}' file → Sums values of the third column
+
+awk 'NR==1 {print}' file → Prints only the first line
+
+awk 'NR>=2 && NR<=5 {print}' file → Prints lines from 2 to 5
+
+awk -F ':' '{print $1}' /etc/passwd → Uses : as field separator and prints first field.
+
+awk -F "/" '{print$1}' bala -->prints 1 fields.
+
+awk -F ":" '{print$2F,4F}' /etc/passwd -->prints 2 and 4 fields
+
+🔹Important Notes
+Default field separator is space
+$1, $2, ... represent column numbers
+NR → Line number
+NF → Number of fields
+
+
+cut Commands::Use cut for simple column extraction; use awk for complex logic.
+====================================================================================
+
+cut -c 1-5 file → Extracts characters from position 1 to 5
+
+cut -c 3- file → Extracts characters from position 3 till end
+
+cut -f 1 file → Extracts first field (default delimiter is TAB)
+
+cut -f 1,3 file → Extracts first and third fields
+
+cut -f 2-4 file → Extracts fields from 2 to 4
+
+cut -d ':' -f 1 /etc/passwd → Uses : as delimiter and extracts first field
+
+cut -d ',' -f 2 file.csv → Extracts second column from a CSV file
+
+cut -d ' ' -f 1 file → Extracts first column using space as delimiter
+
+cut -d ":" -f 1-5 file → Extracts 1 to 5 column using space as delimiter
+
+🔹Important Notes
+Default delimiter for -f is TAB, not space (like fragments)
+Use -d to specify custom delimiter
+cut works only with fixed delimiters
+
+
+Archive & Compression Management::
+==================================
+
+tar -cvf file.tar dir/ → Creates a tar archive from a directory or files
+
+tar -xvf file.tar → Extracts files from a tar archive
+
+tar -czvf file.tar.gz files → Creates a tar archive and compresses it using gzip
+
+tar -xzvf file.tar.gz → Extracts a gzip-compressed tar archive
+
+zip -r file.zip dir/ → Creates a zip archive from a directory recursively
+
+unzip file.zip → Extracts files from a zip archive
+
+gzip file → Compresses a file and replaces it with a .gz file
+
+gunzip file.gz → Decompresses a .gz file back to the original file
+
+zcat file.tar.gz → Displays the content of a gzip-compressed file without extracting.
+
+
+User & Group Management ::
+============================
+A user in linux will have only one primary group and atleast one secondary group.When you create user, group also will be created with same name.
+By default key-based authentications are eanbled.
+
+id user → Displays user ID (UID), primary group ID (GID), and supplementary groups
+
+whoami → Displays the currently logged-in user
+
+who → Displays users currently logged into the system
+
+w → Displays logged-in users along with their activity
+
+useradd user → Creates a new user account
+
+useradd -m user → Creates a user and its home directory
+
+passwd user → Sets or changes the user password
+
+usermod -g group user  → adds user into primary(-g) group.
+
+usermod -aG group user → Adds user to a supplementary group without removing existing groups(Secondary)
+
+userdel user → Deletes a user account (home directory remains)
+
+userdel -r user → Deletes a user account and removes the home directory
+
+groupadd group → Creates a new group
+
+groupdel group → Deletes a group
+
+groups user → Displays all groups the user belongs to
+
+su user → Switches to another user (environment not fully loaded)
+
+su - user → Switches to another user with full login environment
+
+sudo command → Executes a command as root or another permitted user
+
+visudo → Safely edits the sudoers configuration file.
+
+gpasswd -d user group → Remove user from group.
+
+🔹Important System Files:
+/etc/passwd → Stores user account information
+/etc/shadow → Stores encrypted passwords (accessible only by root)
+/etc/group → Stores group information
+/etc/ssh/sshd_conf → all SSH configurations stored like password,acessess etc.
+sshd -t → checks the syntax if any issues in sshd file post changes.
+visudo -c → checks the syntax if any issues in sudoers file post changes.
+
+
+Disk Management::
+==================
+
+lsblk → Displays block devices, partitions, and their mount points
+
+df -h → Displays filesystem disk space usage in human-readable format
+
+df -i → Displays inode usage of filesystems
+
+du -sh dir → Displays total disk usage of a specific directory
+
+mount → Displays all currently mounted filesystems
+
+mount /dev/sdb1 /mnt → Mounts a disk partition to a directory
+
+umount /mnt → Unmounts a mounted filesystem
+
+blkid → Displays UUID and filesystem type of block devices
+
+fdisk -l → Displays disk and partition details
+
+parted -l → Displays partition information (supports large disks)
+
+mkfs.ext4 /dev/sdb1 → Creates an ext4 filesystem on a partition (data will be erased)
+
+fsck /dev/sdb1 → Checks and repairs a filesystem (should be unmounted)
+
+e2fsck -f /dev/sdb1 → Forces filesystem check on ext-based filesystems
+
+tune2fs -l /dev/sdb1 → Displays ext filesystem parameters and settings
+
+mount -o remount,ro /mnt → Remounts filesystem as read-only
+
+mount -o remount,rw /mnt → Remounts filesystem as read-write
+
+/etc/fstab → Configuration file for persistent filesystem mounts at boot
+
+du -sh * → Displays disk usage of each file and directory in the current location.
+
+🔹Important Notes
+df → Filesystem-level usage
+du → Directory-level usage
+mkfs destroys existing data (production critical)
+fsck / e2fsck should be run on unmounted filesystems
+/etc/fstab controls automatic mounts after reboot.
+
+
+CPU Management ::
+=================
+
+top → Displays real-time CPU usage and running processes
+
+htop → Enhanced interactive CPU and process monitor (if installed)
+
+uptime → Displays system running time and load average
+
+mpstat → Displays CPU usage per processor (requires sysstat)
+
+sar -u → Displays historical CPU usage statistics
+
+vmstat → Displays CPU, memory, and process statistics
+
+lscpu → Displays CPU architecture and core details
+
+nproc → Displays number of available CPU cores
+
+nice -n 10 command → Starts a command with lower CPU priority
+
+renice -n 5 -p PID → Changes priority of a running process
+
+watch -n 1 cat /proc/cpuinfo → Continuously displays CPU information
+
+cat /proc/stat → Displays detailed CPU statistics.
+
+
+Memory & Swap Management — Corrected & Verified
+=================================================
+
+free -h → Displays total, used, and free memory and swap in human-readable format
+
+free -m → Displays memory and swap usage in MB
+
+top → Displays real-time memory and swap usage per process
+
+htop → Enhanced interactive memory and process monitor (if installed)
+
+vmstat → Displays memory, swap, and system statistics
+
+ps -eo pid,cmd,%mem --sort=-%mem → Displays processes sorted by memory usage
+
+smem → Displays detailed memory usage per process (if installed)
+
+cat /proc/meminfo → Displays detailed memory and swap information
+
+swapon -s → Displays active swap devices and files
+
+swapon --show → Displays active swap in table format
+
+swapoff -a → Disables all swap devices
+
+swapon -a → Enables all swap devices defined in /etc/fstab
+
+mkswap /dev/sdb2 → Creates a swap area on a partition
+
+mkswap /swapfile → Creates a swap area on a swap file
+
+free -h -w → Displays memory usage including cache and buffers.
+
+
+Process Management::
+====================
+
+ps → Shows processes associated with the current terminal session (current shell)
+
+ps aux / ps -ef → Shows all running processes for all users on the system
+
+ps -eo pid,ppid,cmd,%cpu,%mem → Displays processes with custom fields such as PID, Parent PID, command, CPU usage, and memory usage
+
+pgrep jboss → Finds the process ID (PID) using the process name
+
+top → Displays real-time CPU and memory usage of running processes
+
+top -H → Shows individual threads of processes (very useful for Java/JBoss troubleshooting)
+
+htop → User-friendly and interactive process monitoring tool (enhanced version of top)
+
+pstree → Displays processes in a parent–child tree format
+
+kill -15 PID → Sends SIGTERM to request a graceful shutdown (recommended first)
+
+kill -9 PID → Sends SIGKILL to forcefully terminate a process immediately (last resort)
+
+kill -1 PID → Sends SIGHUP to reload configuration if the application supports it
+
+kill -3 PID → Sends SIGQUIT to the process;terminates the process and generates a core dump for debugging.
+
+pkill jboss → Stops process(es) using the process name (may affect multiple processes)
+
+killall jboss → Stops all processes with the specified name (use with caution)
+
+bg → Continues a stopped job in the background
+
+fg → Brings a background job to the foreground
+
+nohup cmd & → Runs a command in the background and keeps it running after logout.
+
+
+Log Management::
+=================
+
+journalctl -xe → Shows recent logs with emphasis on errors and additional explanations
+
+journalctl -b → Displays logs since the last system boot
+
+journalctl -u jboss --since "1 hour ago" → Shows logs from the last 1 hour for the jboss service
+
+journalctl -u jboss -f → Displays live (follow) logs for the jboss service
+
+tail -f /var/log/syslog → Shows live system logs (Debian/Ubuntu-based systems)
+
+tail -n 200 /var/log/syslog → Displays the last 200 lines of the system log.
+
+
+Service Management (systemd)::
+===============================
+
+systemctl list-units → Shows active units (services, sockets, targets, etc.)
+
+systemctl list-unit-files → Shows all unit files and their states (enabled/disabled/static)
+
+systemctl start service → Starts the specified service
+
+systemctl stop service → Stops the specified service
+
+systemctl restart service → Restarts the specified service
+
+systemctl reload service → Reloads configuration only if the service supports reload
+
+systemctl status service → Shows service status, recent logs, and process details
+
+systemctl status service -l → Shows full output without truncation
+
+systemctl enable service → Enables the service to start at boot
+
+systemctl disable service → Disables the service from starting at boot
+
+systemctl is-enabled service → Checks whether the service is enabled at boot
+
+systemctl is-active service → Checks whether the service is currently running
+
+systemctl --failed → Lists failed units/services
+
+systemctl daemon-reload → Reloads systemd unit files after modifying service definitions.
+
+
+Package Management::
+====================
+
+RHEL / CentOS / Rocky / Alma:(yum / dnf)
+yum list installed / dnf list installed → Lists all installed packages
+
+yum search package / dnf search package → Searches for a package
+
+yum install package / dnf install package → Installs a package
+
+yum remove package / dnf remove package → Removes a package
+
+yum update / dnf update → Updates all installed packages
+
+yum info package / dnf info package → Shows package details
+
+yum provides file / dnf provides file → Finds which package owns a file
+
+yum repolist / dnf repolist → Lists enabled repositories.
+
+dnf module list packages -->List packageand its versions
+
+
+Debian / Ubuntu (apt)::
+
+apt list --installed → Lists all installed packages
+
+apt search package → Searches for a package
+
+apt install package → Installs a package
+
+apt remove package → Removes a package (keeps config files)
+
+apt purge package → Removes a package with configuration files
+
+apt update → Updates package index
+
+apt upgrade → Upgrades installed packages
+
+apt show package → Displays package information
+
+dpkg -l → Lists installed packages using dpkg
+
+dpkg -S file → Finds which package owns a file.
+
+
+curl and wget Commands::
+============================
+
+curl url → Fetches and displays the content of a URL
+
+curl -O url → Downloads a file and saves it with the original filename
+
+curl -o file url → Downloads a file and saves it with a custom filename
+
+curl -I url → Fetches HTTP headers only
+
+curl -v url → Verbose output (useful for debugging)
+
+curl -L url → Follows HTTP redirects
+
+curl -u user:password url → Accesses URL using basic authentication
+
+curl -X GET|POST|PUT|DELETE url → Sends a specific HTTP method
+
+curl -d "data" url → Sends POST data
+
+curl -H "Header: value" url → Sends custom HTTP headers
+
+curl -k https://url → Skips SSL certificate verification (use cautiously)
+
+🔹wget
+
+wget url → Downloads a file from a URL
+
+wget -O file url → Downloads a file with a custom filename
+
+wget -c url → Resumes a partial download
+
+wget -b url → Downloads a file in the background
+
+wget -q url → Quiet mode (no output)
+
+wget --spider url → Checks URL availability without downloading
+
+wget -r url → Recursively downloads content
+
+wget --limit-rate=200k url → Limits download speed
+
+wget --user=user --password=pass url → Downloads using authentication
+
+wget --no-check-certificate url → Skips SSL certificate verification.
+
+
+Networking Commands::
+===================== 
+
+ping google.com → Checks network connectivity to a remote host
+
+traceroute google.com → Shows the path (hops) packets take to reach the destination
+
+dig google.com → Checks DNS resolution (useful for timeout issues)
+
+nslookup google.com → Performs DNS lookup
+
+ss -tulnp → Shows listening services and open ports
+
+ss -ant → Displays all active TCP connections
+
+netstat -tulnp → Shows listening ports and services (legacy, replaced by ss)
+
+telnet host port → Tests connectivity to a specific port
+
+nc host port → Tests TCP/UDP connectivity (netcat)
+
+iptables -L → Displays firewall rules
+
+firewall-cmd --list-all → Shows active firewalld rules
+
+tcpdump -i eth0 port 443 or host 10.0.0.5 → Captures network traffic for analysis
+
+ip a / ip -br a → Displays network interfaces and IP addresses
+
+ip link → Shows network interfaces and their state
+
+ip route → Displays the routing table
+
+ip route get 8.8.8.8 → Shows route to a destination
+
+ip addr add 10.0.0.5/24 dev eth0 → Adds an IP address to an interface
+
+ip addr del 10.0.0.5/24 dev eth0 → Removes an IP address from an interface
+
+hostname → Displays the system hostname
+
+hostnamectl → Displays and manages hostname information
+
+cat /etc/resolv.conf → Shows DNS configuration
+
+resolvectl status → Displays systemd DNS resolver status
+
+iftop → Displays real-time bandwidth usage
+
+🔹Troubleshooting Flow
+
+Interface → IP → Route → DNS → Port → Firewall → Application
+
+==============================
+Linux File System Hierarchy
+==============================
+/  (Root Directory)
+------------------
+- Top-level directory
+- Parent of all directories
+- Represented by /
+- Similar to C:\ in Windows
+Commands:
+ls /
+cd /
+pwd
+
+/root
+-----
+- Home directory of root (super user)
+- Not accessible by normal users
+Commands:
+sudo ls /root
+sudo -i
+
+/home
+-----
+- Home directory for all normal users
+- Each user has a separate folder
+- Example: /home/alex
+Commands:
+ls /home
+cd /home/username
+whoami
+
+/bin(Binary Files)
+-------------------
+- Essential commands for all users
+- Required in single-user mode
+- Commands: ls, cp, mv, cat, echo
+Commands:
+ls /bin
+which ls
+
+
+/sbin(System Binaries)
+-----------------------
+- System administration commands
+- Mostly used by root
+Examples:
+reboot, fdisk, iptables
+Commands:
+ls /sbin
+sudo fdisk -l
+
+/lib
+----
+- Shared library files
+- Used by /bin and /sbin
+- Library extension: .so
+- Similar to DLLs in Windows
+Commands:
+ls /lib
+ldd /bin/ls
+
+/boot
+-----
+- Boot loader and kernel files
+- Required during startup
+Important files:
+vmlinuz        -> Linux kernel
+initrd/initramfs -> Initial RAM disk
+grub/          -> GRUB bootloader
+Commands:
+ls /boot
+uname -r
+
+/etc
+----
+- System-wide configuration files
+- Editable text files
+Important files:
+/etc/passwd      -> User info
+/etc/shadow      -> Passwords
+/etc/resolv.conf -> DNS
+/etc/hostname
+Commands:
+ls /etc
+cat /etc/passwd
+cat /etc/resolv.conf
+
+/dev
+----
+- Device files
+- Everything treated as a file
+Examples:
+/dev/sda   -> Hard disk
+/dev/sda1 -> Partition
+/dev/cdrom
+Commands:
+ls /dev
+lsblk
+mount | grep sda
+
+
+/proc
+-----
+- Virtual filesystem
+- Process & kernel information
+- Dynamically generated files
+Important files:
+/proc/cpuinfo -> CPU info
+/proc/meminfo -> RAM info
+Commands:
+cat /proc/cpuinfo
+cat /proc/meminfo
+ps aux
+
+
+/var
+----
+- Variable data
+- Changes frequently
+Contains:
+/var/log   -> Logs
+/var/mail  -> Mail
+/var/cache -> Cache
+Commands:
+ls /var
+ls /var/log
+tail -f /var/log/syslog
+
+
+/mnt
+----
+- Temporary mount point
+- Used by administrators
+Commands:
+sudo mount /dev/sdb1 /mnt
+df -h
+sudo umount /mnt
+
+/media
+------
+- Mount point for removable media
+- USB, CD, DVD
+Commands:
+ls /media
+df -h
+
+/usr(UNIX Shareable Resources)
+-------------------------------
+- User applications & programs
+- Most software installed here
+Subdirectories:
+/usr/bin   -> User commands
+/usr/lib   -> Libraries
+/usr/share -> Documentation
+Commands:
+ls /usr
+ls /usr/bin
+
+
+/opt
+----
+- Optional directory
+- Third-party / manually installed software
+
+Commands:
+ls /opt
+
+
+Linux Disk Setup — Single & Multiple Partitions:
+================================================
+
+lsblk – Lists all disks and partitions to identify the correct target disk.
+
+sudo parted /dev/nvme1n1 print – Shows existing partitions as a dry-run; last chance to confirm before making changes.
+
+sudo parted /dev/nvme1n1 --align optimal – Opens parted interactively with optimal alignment for SSD/NVMe.
+
+mklabel gpt – Creates a GPT partition table, removing any existing layout.
+
+mkpart primary 1MiB 100% – Creates a single partition (/dev/nvme1n1p1) with proper alignment.
+
+print – Displays the partition table for confirmation.
+
+quit – Exits parted after verifying changes.
+
+lsblk /dev/nvme1n1 – Verifies the kernel sees the new partition.
+
+sudo mkfs.xfs /dev/nvme1n1p1 – Formats the partition.
+
+sudo mkdir -p /data – Creates a mount point.
+
+sudo mount /dev/nvme1n1p1 /data – Temporarily mounts the partition.
+
+touch /data/.test && rm /data/.test – Verifies read/write access.
+
+sudo blkid /dev/nvme1n1p1 – Retrieves UUID for permanent mounting.
+
+sudo vim /etc/fstab – Add fstab entry:
+
+UUID=xxxx /data xfs defaults,nofail,noatime 0 2
+
+sudo umount /data && sudo mount -a – Tests permanent mount without reboot.
+
+Multiple Partitions:
+====================
+
+lsblk – Lists all disks to identify the correct disk.
+
+sudo fdisk /dev/sdb – Opens fdisk for partitioning.
+
+g – Creates GPT partition table.
+
+n → +50G – First partition /dev/sdb1.
+
+n → +100G – Second partition /dev/sdb2.
+
+n → <Enter> – Third partition /dev/sdb3.
+
+p – Displays partition table.
+
+w – Writes changes to disk.
+
+sudo mkfs.ext4 /dev/sdb1 – Formats first partition.
+
+sudo mkfs.ext4 /dev/sdb2 – Formats second partition.
+
+sudo mkfs.ext4 /dev/sdb3 – Formats third partition.
+
+sudo mkdir -p /data1 /data2 /data3 – Creates mount points.
+
+sudo mount /dev/sdb1 /data1 – Temporarily mounts first partition.
+
+sudo mount /dev/sdb2 /data2 – Temporarily mounts second partition.
+
+sudo mount /dev/sdb3 /data3 – Temporarily mounts third partition.
+
+sudo blkid /dev/sdb1 /dev/sdb2 /dev/sdb3 – Get UUIDs.
+
+sudo vim /etc/fstab – Add permanent mount entries:
+
+UUID=uuid1 /data1 ext4 defaults,nofail 0 2
+UUID=uuid2 /data2 ext4 defaults,nofail 0 2
+UUID=uuid3 /data3 ext4 defaults,nofail 0 2
+
+sudo umount /data1 /data2 /data3 && sudo mount -a – Test mounts.
+
+One-line workflow:
+====================
+lsblk → parted/fdisk → mkpart → lsblk → mkfs → mkdir → mount → blkid → fstab → mount -a
+
+
+📌NFS Server:
+mount | grep /data --> Confirms the filesystem is mounted and ready to be exported via NFS.
+sudo apt install -y nfs-kernel-server(or: sudo dnf install -y nfs-utils) --> Installs NFS server packages.
+systemctl status nfs-server --> Verifies NFS service is available.
+sudo chown -R nobody:nogroup /data(or: chown -R user:group /data) --> Sets ownership for NFS client access.
+sudo chmod 755 /data -->Sets directory permissions for sharing.
+sudo vim /etc/exports -->Opens the NFS export configuration file.
+/data 192.168.1.0/24(rw,sync,no_subtree_check) -->Exports /data to the specified network.
+sudo exportfs -ra -->Applies NFS export rules.
+sudo exportfs -v  -->Displays active NFS exports for confirmation.
+sudo systemctl enable --now nfs-server -->Starts NFS service and enables it on boot.
+sudo firewall-cmd --permanent --add-service=nfs
+sudo firewall-cmd --reload
+(or: sudo ufw allow nfs) -->Allows NFS traffic through the firewall.
+
+📌 NFS CLIENT
+sudo apt install -y nfs-common(or: sudo dnf install -y nfs-utils) -->Installs NFS client utilities.
+showmount -e SERVER_IP -->Lists available NFS exports from the server.
+sudo mkdir -p /mnt/data -->Creates a mount point for the NFS share.
+sudo mount -t nfs SERVER_IP:/data /mnt/data -->Temporarily mounts the NFS share.
+touch /mnt/data/.test && rm /mnt/data/.test -->Verifies read/write access on the NFS mount.
+sudo vim /etc/fstab  -->Opens fstab for persistent NFS mount configuration.
+SERVER_IP:/data /mnt/data nfs defaults,_netdev 0 0   -->Ensures the NFS share mounts automatically after reboot.
+sudo umount /mnt/data && sudo mount -a  -->Tests persistent NFS mount without reboot.
+
+LVM PARTITION:
+LVM (Logical Volume Manager) allows flexible disk management by abstracting physical storage.
+
+Physical Volume (PV) → A disk or partition initialized for LVM
+Volume Group (VG) → A pool of storage created from one or more PVs
+Logical Volume (LV) → Virtual partition created from VG space
+
+Basic flow:
+Disk/Partition → PV → VG → LV → Filesystem → Mount point
+
+LVM Creation::
+lsblk → Lists all disks and partitions to identify the correct target disk
+
+sudo parted /dev/nvme1n1 print → Displays existing partition layout as a dry-run
+
+sudo parted /dev/nvme1n1 --align optimal → Opens parted with optimal alignment for SSD/NVMe
+
+mklabel gpt → Creates a GPT partition table (destroys existing layout)
+
+mkpart primary 1MiB 100% → Creates a single partition for LVM use
+
+set 1 lvm on → Marks the partition type as LVM
+
+print → Displays the partition table for confirmation
+
+quit → Exits parted after verification
+
+lsblk /dev/nvme1n1 → Confirms the kernel detects the new partition
+
+pvcreate /dev/nvme1n1p1 → Initializes the partition as an LVM Physical Volume
+
+vgcreate vg_data /dev/nvme1n1p1 → Creates a Volume Group named vg_data
+
+vgdisplay → Displays Volume Group details
+
+lvcreate -n lv_data -l 100%FREE vg_data → Creates a Logical Volume using all free space
+
+lvdisplay → Displays Logical Volume details
+
+mkfs.xfs /dev/vg_data/lv_data → Formats the Logical Volume with XFS
+
+mkdir -p /data → Creates a mount point
+
+mount /dev/vg_data/lv_data /data → Temporarily mounts the Logical Volume
+
+touch /data/.test && rm /data/.test → Verifies read/write access
+
+blkid /dev/vg_data/lv_data → Displays UUID of the Logical Volume
+
+vim /etc/fstab → Opens fstab for permanent mount configuration
+
+UUID=xxxx /data xfs defaults,nofail,noatime 0 2 → Ensures persistent mount across reboots
+
+umount /data && mount -a → Tests permanent mount without reboot.
+
+🔼 LVM EXTEND
+
+lsblk → Displays disks and partitions to identify free space or new disks
+
+pvcreate /dev/nvme2n1 → Initializes a new disk or partition as a Physical Volume
+
+vgextend vg_data /dev/nvme2n1 → Adds the new Physical Volume to an existing Volume Group
+
+vgdisplay vg_data → Shows updated Volume Group size and free space
+
+lvextend -l +100%FREE /dev/vg_data/lv_data → Extends the Logical Volume using all free VG space
+
+xfs_growfs /data → Expands the XFS filesystem online without unmounting
+
+df -h /data → Verifies the filesystem size increase
+
+🔽 LVM REDUCE (EXT4 ONLY ⚠️)
+
+df -h /data → Checks current filesystem usage
+
+umount /data → Unmounts the filesystem before shrinking
+
+e2fsck -f /dev/vg_data/lv_data → Checks filesystem integrity
+
+resize2fs /dev/vg_data/lv_data 50G → Shrinks the filesystem to the desired size
+
+lvreduce -L 50G /dev/vg_data/lv_data → Reduces the Logical Volume size
+
+mount /data → Mounts the filesystem back
+
+df -h /data → Verifies the reduced filesystem size
+
+🚫 IMPORTANT NOTE
+
+xfs → Cannot be reduced (shrink not supported)
+ext4 → Can be safely reduced offline
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
