@@ -1,0 +1,531 @@
+Shell Scripting:
+================
+Shell Scripting is a process of automate your regular or day-to-day activities.
+
+#!/bin/bash(Shebang):
+====================
+There are different shell executables like bash,ksh,sh,dash etc.
+bash is the most commonly used shell and its very easy.
+Shebang is the first line of a script
+It starts with #!.It tells the system which interpreter to use.
+What it does:
+When you run ./script.sh. The system uses Bash to execute it
+Common shebangs:
+#!/bin/bash
+#!/usr/bin/env bash
+#!/bin/sh
+#!/bin/dash(Ubuntu/Debian)
+#!/bib/ksh(AIX/Solaris)
+
+Difference b/w #!/bin/sh and #!/bin/bash:
+========================================
+Previously both are same because #!/bin/sh was redirecting using linking concept to #!/bin/bash but now it is not the same.
+because some of the operating systems decided use #!/bin/dash as the default.your bash script might not work where the dash is default.
+#!/bin/sh -->Run this script with sh (the Bourne shell) or whatever shell your system links to as sh.
+#!/bin/bash -->Run this script specifically with Bash.
+
+Example:
+#!/bin/bash 
+echo "Hello, world!"
+
+./hello.sh (or)sh hello.sh -->Run the script.
+chmod +x hello.sh -->Make any script executable.
+
+nano hello.sh -->Execute sample scrpt.
+echo $0 (or) echo $SHELL (or) ps -p $$ -->which type of shell we are using.
+cat /etc/shells -->we can see what all shells configured in machine.
+
+How to run a script in debug mode:
+==================================
+#!/bin/bash
+echo"hello"
+echo"how r u"
+date
+set -x
+pwd
+uptime
+set +x
+uname
+
+sh hello.sh 
+
+set -x and set +x are used to run specific commands in whole script.
+
+Comments:
+=========
+Comments are generally improves the readbaility of the code.
+# -->used for single line comments.
+echo "hello world" #it prints hello world -->Inline comments are used beside the code or middle of the code.
+<<comments here
+......
+......
+comment -->used for multi-line comments.
+
+===========
+Variables:
+===========
+variables are how you store and reuse data (strings, numbers, command output, etc.).
+
+Best Practices 🧠
+No spaces around =
+Use "$" to access variables like $name, $age, $salary.
+Use uppercase for environment variables
+Prefer $(...) over backticks
+
+Special Shell Variables (Very Important ⭐)
+============================================
+$0-->Script name
+$1–$9-->Command-line arguments
+$#-->Number of arguments
+$@-->All arguments passed
+$?-->Exit status of last command
+$$-->Process ID of script.
+$!-->PID of background process
+$PWD -->Present working directory
+$HOME -->home dir of user
+
+
+Example-1:Define variables
+#!/bin/bash
+PERSON1=suresh
+PERSON2=ramesh
+echo "$PERSON1:Hi $PERSON2"
+echo "$PERSON2:Hello $PERSON1"
+echo "$PERSON1:How are you $PERSON2"
+echo "$PERSON2:im good $PERSON1"
+
+Example-2:
+we can pass the arguments dynamically during execution as command line arguments.
+#!/bin/bash
+PERSON1=$1
+PERSON2=$2
+echo "$PERSON1:Hi $PERSON2"
+echo "$PERSON2:Hello $PERSON1"
+echo "$PERSON1:How are you $PERSON2"
+echo "$PERSON2:im good $PERSON1"
+
+sh variables.sh suresh ramesh -->this is another way of passing arguments.
+
+Example-3:
+we can pass the variables by reading the arguments.
+#!/bin/bash
+echo "please enter your username:"
+read USER_NMAE
+echo "user name is $USER_NAME"
+echo "enter your password:"
+read -s PASSWORD      # "-s" is to hide password 
+echo "password is $PASSWORD"
+
+sh variables.sh -->once you execute it will prompt the username and password to enter. once you given it will visible.
+
+Example-4:
+To execute the command and take the output into variable.
+Like how much time the task executed.
+#!/bin/bash
+TIMESTAMP=$(date)
+echo "scrpt exected at : $TIMESTAMP"
+
+Example-5:
+To get the exact output dynamically.
+#!/bin/bash
+START_TIME=$(date +%s) #usually we can calculate time in seconds.
+echo "script executed at :$START_TIME"
+sleep 10
+END_TIME=$(date +%s)
+TOTAL_TIME=$(($END_TIME-START_TIME))
+echo "script executed in : $TOTAL_TIME"
+
+Example-6:
+Special variables
+#!/bin/bash
+echo "all args passed to script:$@"
+echo "no.of variables passed to script: $#"
+echo "script name : $0"
+echo "present directory : $PWD"
+echo "PID of script : $$"
+echo " home dir of user : $HOME"
+sleep 100 &
+echo  "background process id : $!"
+
+$@ vs $*
+===========
+$@ -->treats args separately
+$* -->treats as single args
+
+===========
+OPERATORS:
+===========
+Opeartors are used to perform various opearations like arithmetic,comparison,logical and string opearions.
+
+1.Arithmetic operators:
+======================
+a + b
+a - b
+a * b
+a / b 
+a % b
+
+example:
+#!/bin/bash
+a=20
+b=30
+echo "arithmetic opraions:"
+echo "a + b = $((a + b))"
+echo "a - b = $ ((a - b ))"
+echo "a * b = $ ((a * b ))"
+echo "a / b = $ ((a / b ))"
+echo "a % b = $ ((a % b ))"
+
+2.Comparison Opeartors:
+=======================
+-gt -->gretaer than
+-lt -->less than
+-eq -->equals to
+-ne -->not equal to 
+
+example:
+#!/bin/bash
+a=20
+b=30
+echo "comaprison opeartors:"
+if [$a -eq $b]; then        #==
+   echo "a is equal to b"
+fi 
+if [$a -ne $b]; then       #!=
+	echo "a is not equal to b"
+fi
+if [$a gt $b];then         #>
+	echo "a is greater than b"
+fi
+if [$a -lt $b]; then       #<
+	echo"a is less than b"
+fi
+
+3.Logical operators:
+===================
+&& --> Logical AND
+A   B  A&&B 
+-------------
+T   T    T 
+T   F	 F
+F   T    F
+F   F    F
+
+|| -->Logical OR
+A   B  A||B 
+-------------
+T   T    T 
+T   F	 T 
+F   T    T 
+F   F    F
+
+! -->Logical NOT
+
+Example:
+#!/bin/bash
+a=30
+b=5
+echo "logical opearations:"
+if [$a -eq $b] && [$b -eq 5]; then
+	echo" both conditions are true"
+fi
+if [$a -eq 10] || [$b -eq 5]; then
+	echo"at least one condition is true:"
+fi 
+if ![$a -eq 0]; then
+	echo"a is not equal to 0"
+fi
+
+4.String opeartors:
+===================
+= -->equal
+== -->equal (recommended inside [[]])
+!= --> not equal
+< -->less than
+> -->greater than
+-z -->string is empty
+-n -->string is not empty
+
+Example:
+#!/bin/bash
+str1="hello"
+str2="world"
+echo "string opearations:"
+if ["$str1" = "$str2"]; then
+	echo "strings are not equal"
+fi
+if ["$str1" != "$str2"]; then
+	echo "strings are not equal"
+fi 
+str3="$str1 $str2"
+echo "concatinated string: $str3"
+length=${#str1}
+echo "length of str1 is $length"
+
+=================================
+CONDITIONAL CONTROL STATEMENTS:
+=================================
+Control statements  are allows you to control the flow of execution based on certain conditions or loops.
+
+1.if statement:
+---------------
+if [condition]; then
+	#execute if condition is true
+fi
+
+Example:
+#!/bin/bash
+a=10
+if [$a -eq 10]; then 
+	echo "a is equal to 10"
+fi
+2.if-else statement:
+--------------------
+its allows you to execute if the specified condition is true,otherwise another block of code is executed.
+syntax:
+if [condition]; then
+    #execute if condition is true
+else
+    #execute if condition is false.
+fi
+
+Example:
+#!/bin/bash
+a=10
+if [$a -eq 10]; then 
+	echo "a is equal to 10"
+else
+	echo"a is not equal to 10"
+fi
+3.if-elif-else statement:
+-------------------------
+It allows you to test multiple conditions and execute a block of code which the conditions is true.
+syntax:
+if [condition]; then
+	#execute if condition1 is true
+elif [condition]; then
+	#execute if condition2 is true
+else
+	#execute if all conditions are false
+fi
+Example:
+#!/bin/bash
+a-20
+if [$a -eq 10]; then
+	echo"value of a is 10"
+elif [$a -eq 20]; then
+	echo"value of a is 20"
+else
+	echo"value of a is neither 10 nor 20"
+fi
+
+4.Case statement:
+------------------
+Its basically the shells clean,readable alternative to a long chain of if..elif..else statement
+syntax:
+case VARIABLE in
+			pattern1)
+				#execute if variable matches pattern1
+			    ;;
+			Pattern2)
+				#execute if variable matches pattern2
+				;;
+			Pattern3 | pattern4)
+				#execute if variable matches either pattern3 or pattern4
+				;;
+			*)
+				#execute if variable matches none of the above patterns
+				;;
+esac
+
+Example:
+#!/bin/bash
+fruit="apple"
+case $fruit in
+	apple)
+		echo "its a fruit: apple"
+		;;
+	banana)
+		echo "its a fruit: banana"
+		;;
+	orange | mandarin)
+		echo"its a citrus fruit"
+		;;
+	*)
+		echo"unknown fruit"
+		;;
+esac
+
+===================
+LOOPING STATEMENTS:
+===================
+Looping statements are used to execute a block of commands repeatedly
+until a specified condition is satisfied or for a fixed number of times.
+
+for loop:
+---------
+The for loop is used when the number of iterations is known in advance.
+syntax:
+for VARIABLE in list
+do 
+	#execute for each item in list
+done
+
+Example:
+#!/bin/bash
+for num in 1 2 3 4 5
+do in
+	echo"number:$num"
+done
+
+while loop:
+-----------
+The while loop executes commands as long as the condition is true.
+syntax:
+while condition
+do 
+  commands
+done
+
+Example:
+#!/bin/bash
+i=1
+while [$i -le 5]
+do 
+	echo $i 
+	i=$((i+1))
+done
+
+until loop:
+-----------
+The until loop executes commands until the condition becomes true.
+syntax:
+until condition
+do 
+	commands
+done
+
+Example:
+#!/bin/bash
+i=1
+until [$i =gt 5]
+do 
+   echo $i 
+   i=$((i+1))
+done
+
+select loop:
+-------------
+The select loop is used to create menu-driven programs.
+syntax:
+select variable in list
+do
+    commands
+done
+Example:
+#!/bin/bash
+select choice in Apple Banana Orange Exit
+do
+    case $choice in
+        Apple) echo "You chose Apple" ;;
+        Banana) echo "You chose Banana" ;;
+        Orange) echo "You chose Orange" ;;
+        Exit) break ;;
+        *) echo "Invalid choice" ;;
+    esac
+done
+
+=======
+Arrays:
+=======
+An array is a variable that can store multiple values under a single name.
+Each value is accessed using an index number (starting from 0).
+
+Syntax:
+array_name=(value1 value2 value3 ...)
+Example:
+fruits=(Apple Banana Mango)
+
+Key points:
+-----------
+Index starts from 0
+Use ${} while accessing elements
+Arrays work only in Bash
+@ → all elements
+
+Declaring arrays:
+------------------
+1.Implicit declaration:u can assign values to indexed positions
+name_array==("kk" "sai" "ram")
+
+2.explicit declaration:u can assign values via built in command.
+declare -a name_array
+name_array("kk" "sai" "ram")
+
+accessing array elements:
+-------------------------
+Syntax
+${array_name[index]}
+
+Example
+#!/bin/bash
+fruits=(Apple Banana Mango)
+echo ${fruits[0]}   # Apple
+echo ${fruits[1]}   # Banana
+accessing all elements:
+-------------------------
+Syntax
+${array_name[@]}
+
+Example
+#!/bin/bash
+echo ${fruits[@]}
+
+Finding Array Length:
+---------------------
+Syntax
+${#array_name[@]}
+
+Example
+#!/bin/bash
+echo "Number of fruits: ${#fruits[@]}"
+
+Looping Through an Array:
+-------------------------
+Syntax
+for element in ${array_name[@]}
+do
+    commands
+done
+
+Example
+#!/bin/bash
+for fruit in ${fruits[@]}
+do
+    echo $fruit
+done
+
+Adding Elements to an Array:
+----------------------------
+Syntax
+array_name+=(new_value)
+
+Example
+#!/bin/bash
+fruits+=(Orange)
+echo ${fruits[@]}
+
+Removing an Element:
+--------------------
+Syntax
+unset array_name[index]
+
+Example
+#!/bin/bash
+unset fruits[1]   # Removes Banana
+echo ${fruits[@]}
+
+===========
+Functions:
+============
+A function is a block of code that performs a specific task and can be reused multiple times in a script.
