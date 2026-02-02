@@ -47,7 +47,7 @@ Production Drill Session::
 2.Config Drift -->Secrets,Routing,IAM roles
 3.Dependencies failing -->Upstream vs downstream(DB down,Cache,DNS,LB,Gateway)
 4.Deployment Issues -->Incompatible versions,schema mismatch,crash loops
-5.Process failures -->Manual mistakes,Missing alerts
+5.Process failures -->Manual mistakes,Missing alerts.
 
 
 
