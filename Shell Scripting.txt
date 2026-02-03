@@ -525,7 +525,128 @@ Example
 unset fruits[1]   # Removes Banana
 echo ${fruits[@]}
 
+
+File Descriptors:
+-----------------
+0 --->std i/p 
+1 --->std o/p 
+2 --->std error
+2>&1 -->redirects standard error (stderr) to standard output (stdout).
+
+Exit codes:
+===========
+0 to 127
+0 -->success
+other than 0 ---->failure
+
 ===========
 Functions:
 ============
 A function is a block of code that performs a specific task and can be reused multiple times in a script.
+
+syntax:
+function_name()
+{
+  command1
+  command2
+}
+
+example:
+#!/bin/bash
+greet() {
+    echo "Hello, Welcome to Shell Scripting"
+}
+
+greet
+
+Key points:
+------------
+
+✔ No return values like C
+✔ Uses $1, $2 for parameters
+✔ Exit status via return
+✔ Define function before calling it
+
+Passing parameters to functions:
+--------------------------------
+Arguments are accessed like script arguments:
+$1, $2, $3 …
+Example:
+#!/bin/bash
+add() {
+    sum=$(($1 + $2))
+	echo"sum = $sum"
+}
+
+add 10 20
+
+Function return value:
+-----------------------
+Shell functions do not return values directly.
+They return an exit status (0–255).
+example:
+#!/bin/bash
+check() {
+	return 0
+}
+check 
+echo $?
+
+example-2:
+Use echo and command substitution
+#!/bin/bash
+square() {
+		echo $(($1 * $1))
+}
+result=$(square = $result)
+echo "square = $result"
+
+output:
+square=25 means failure
+
+Global variables:
+----------------
+A global variable is a variable that is accessible throughout the script, including inside functions.
+
+👉 By default, all shell variables are global.
+
+Example:
+#!/bin/bash
+name="linux"
+show() {
+	echo"inside the function: $name"
+}
+show
+echo "outside the function: $name"
+
+Output:
+-------
+Inside function: Linux
+Outside function: Linux
+
+
+Local Variables:
+-----------------
+A local variable is a variable that is accessible only inside the function in which it is declared.
+
+👉 Created using the local keyword
+⚠️ local works in bash, ksh, zsh (not pure sh)
+
+syntax:
+function_name() {
+    local variable=value
+}
+
+Example:
+demo() {
+    local x=10
+    echo "Inside function: $x"
+}
+
+demo
+echo "Outside function: $x"
+
+Output:
+Inside function: 10
+Outside function:
+✔ x exists only inside the function
