@@ -10,7 +10,7 @@ provision server -->baseline it according to our needs like customization
 6.creating systemctl services
 7. enable and starting the services
 
-the above all steps will call it as configuration
+the above all steps will call it as configuration.
 
 Configuration management tools:
 chef,saltstack,puppet,ansible,CFEngine
