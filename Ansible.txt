@@ -1,0 +1,69 @@
+configuration management:
+==========================
+provision server -->baseline it according to our needs like customization
+
+1.installing programming language
+2.creating users and folder
+3.installing system packages
+4.download code
+5.installing dependecies
+6.creating systemctl services
+7. enable and starting the services
+
+the above all steps will call it as configuration
+
+Configuration management tools:
+chef,saltstack,puppet,ansible,CFEngine
+
+Pull vs Push::
+===============
+Push Model:
+Controller pushes configuration to nodes
+The central server initiates the connection
+It sends configs/commands directly to target machines
+Targets don’t need to ask for anything
+
+How it works
+Controller  ───►  Node1
+             ───►  Node2
+             ───►  Node3
+
+
+Pros:
+Fast execution
+Easy to control and debug
+No agent always running on nodes (often)
+
+Cons
+Harder to scale for very large infrastructures
+Controller needs network access to all nodes
+
+Pull Model:
+-----------
+Nodes pull configuration from the server
+Each node initiates the connection
+Nodes periodically check the server and pull updates
+
+How it works
+Node1 ──► Controller
+Node2 ──► Controller
+Node3 ──► Controller
+
+Pros:
+Highly scalable
+More secure (nodes reach out, controller doesn’t need access)
+Good for large, distributed systems
+
+Cons:
+Changes may not apply instantly (depends on polling interval)
+Slightly harder to debug timing issues
+
+Authentication requirements:
+protocol
+port
+username
+password
+
+ansible all -i 172.31.26.110, -e ansible_user=ec2-user -e ansible_password=devops321 -m ping -->connect to node and perform operations.
+-m -->modules/collections
+ansible all -i 172.31.26.110, -e ansible_user=ec2-user -e ansible_password=devops321 -b -m dnf -a "name=nginx state=installed" -->to install nginx with root 

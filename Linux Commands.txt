@@ -2,6 +2,7 @@ ssh-keygen -f bala -->to generate public and private key.
 ssh -i <private-key>   user-name@ip -->to connect server manually.
 ssh -i bala ec2-user@54.159.73.235 
 scp -i <private-key> file-name ec2-user@ip:/home/ec2-user/bala/ -->copy files from one server to another server.
+ssh ec2@172.54.92.21 'touch bala.txt' -->to create file without login to the server by connecting remote.
 
 Absolute path -->Full path like from scratch
 Relative path -->Current path 
