@@ -4,6 +4,10 @@ ssh -i bala ec2-user@54.159.73.235
 scp -i <private-key> file-name ec2-user@ip:/home/ec2-user/bala/ -->copy files from one server to another server.
 ssh ec2@172.54.92.21 'touch bala.txt' -->to create file without login to the server by connecting remote.
 
+To connect the server with passwordless:
+/etc/ssh/sshd_config -->uncomment permit root login -->uncomment password authentication -->reset password of root user -->access the server
+ssh-copy-id root@pub.ip -->to connrct server
+
 Absolute path -->Full path like from scratch
 Relative path -->Current path 
 

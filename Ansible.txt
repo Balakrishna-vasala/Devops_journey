@@ -1,17 +1,5 @@
 configuration management:
 ==========================
-provision server -->baseline it according to our needs like customization
-
-1.installing programming language
-2.creating users and folder
-3.installing system packages
-4.download code
-5.installing dependecies
-6.creating systemctl services
-7. enable and starting the services
-
-the above all steps will call it as configuration.
-
 Configuration management tools:
 chef,saltstack,puppet,ansible,CFEngine
 
@@ -58,6 +46,41 @@ Cons:
 Changes may not apply instantly (depends on polling interval)
 Slightly harder to debug timing issues
 
+
+=========
+Ansible:
+=========
+Ansible is an open-source configuration management, automation, and orchestration tool used to:
+Configure servers
+Deploy applications
+Automate repetitive IT tasks
+
+It is simple, agentless, and push-based, which makes it very popular in DevOps.
+
+Why Ansible?
+✅ Agentless – no software installed on managed nodes
+✅ Uses SSH (Linux) / WinRM (Windows)
+✅ Human-readable YAML
+✅ Easy to learn
+✅ Idempotent (runs safely multiple times and ignores if it alredy exits)
+
+Key Components of Ansible
+Control Node:
+-------------
+The machine where Ansible is installed
+Runs Ansible commands
+Pushes configurations
+
+Managed Nodes:
+--------------
+Servers being managed
+Only need SSH access + Python
+
+Inventory:
+-----------
+List of managed nodes that are connected.
+Can be static or dynamic
+
 Authentication requirements:
 protocol
 port
@@ -67,3 +90,288 @@ password
 ansible all -i 172.31.26.110, -e ansible_user=ec2-user -e ansible_password=devops321 -m ping -->connect to node and perform operations.
 -m -->modules/collections
 ansible all -i 172.31.26.110, -e ansible_user=ec2-user -e ansible_password=devops321 -b -m dnf -a "name=nginx state=installed" -->to install nginx with root 
+
+YAML-Yet Another Markup Language:
+----------------------------------
+- name: "balakrishna"
+  dob: "1999-05-10"
+  mobilenumber: "123456789"
+  address:
+   - d/no: "5-12"
+     street: "whiterose layout"
+	 area: "whitefield"
+	 city: "bangalore"
+	 
+	 
+Example-1:
+----------
+- name: ping the server
+  hosts: web
+  tasks: 
+  - name: ping the web server
+    ansible.buitin.ping:
+	
+to execute above playbook use below command.
+ansible-playbook -i inventory.ini -e ansible_user=ec2-user -e ansible_password=DevOps321 01-playbook.yaml
+
+Example-2:
+----------
+- name: Hello World
+  hosts: web
+  tasks: 
+  - name: print hello world
+    ansible.buitin.debug:
+	
+ansible-playbook -i inventory.ini -e ansible_username=ec2-user -e ansible_password=DevOps321 02-playbook.yaml
+
+Example-3:
+-----------
+- name: install and run nginx
+  hosts: web
+  become: s
+  tasks:
+  - name: install nginx
+     ansible.builtin.pacakge:
+	  name:nginx
+	  state: present
+  - name: satrt nginx
+     ansible.builtin.service:
+	   name: nginx
+	   state:started
+	   enabled: yes
+	   
+	  
+ansible-playbook -i inventory.ini -e ansible_username=ec2-user -e ec2-user_password=DevOps321 03-playbook.yaml
+
+Varibles:
+----------
+
+Example-1:
+-----------
+- name: play level variables
+  hosts: local
+  connections: local
+  vars:
+     COURSE: 'Devops with AWS"
+	 DURATION: "140HRS"
+	 TRAINEE: "Sivakumar"
+   tasks:
+     - name: print variables
+	   ansible.builtin.debug:
+	   msg: "Course is: {{COURSE }}, trainee is: {{ TRAINEE }}"
+	   
+ansible-playbook -i inventory.ini 01.varibles.yaml
+
+
+
+Forks:
+------
+In Ansible, forks controls how many hosts Ansible works on in parallel.
+If you run a playbook on 50 hosts and forks = 5, Ansible will:
+Run the task on 5 hosts at a time
+Finish them, then move to the next 5, and so on
+Default value is 5
+You can set forks in a few places:
+
+1. ansible.cfg (most common)
+[defaults]
+forks = 20
+2. Command line
+ansible-playbook site.yml -f 20
+3. Ad-hoc command
+ansible all -m ping -f 10
+
+Ansible addhoc commands:
+------------------------
+ansible -m ping all -->to ping the slave nodes
+ansible -a "uptime" all -->to check uptime of slave nodes
+ansible -a "yum install httpd -y " all -->to install httpd
+ansible -m yum -a "name=nginx" "state=absent" all -->to delete the packges from ansible modules.
+cd /etc/ansible -->stored all ansible config info
+cat /etc/ansible/hosts -->all hosts info present here.
+ansible -m setup localhost -->properties fetched from server.
+
+YAML Playbooks:
+----------------
+fist.yaml
+
+-name: install httpd
+hosts: all
+tasks: 
+ - name:install httpd 
+  yum:
+   - name: httpd
+     state: latest
+	 
+ansible-playbook --syntax-check first.taml -->to check syntax error
+ansible-playbook first.yaml -->to execute playbook
+
+==========
+Variables
+==========
+In Ansible, variables are used to store values that can be reused across playbooks, roles, and tasks. 
+They help make automation flexible and dynamic.
+Defined inside a playbook under "vars".
+
+Example:
+---------
+- name:installing package
+  hosts:all
+  vars:
+    package_name: elinks
+	user_name: ansibledemo
+  tasks:
+   - name:create user
+     user: name={{user_name}} state=present
+   - name: create package
+      yum: name={{package_name}} state=latest
+	 
+ansible-playbook --syntax-check -->to check the syntax of playbook
+
+Passing the varibles:
+---------------------
+- name : installing package
+  hosts : all
+  vars_prompt :
+    - name :package_name
+	  prompt : "please enter your package_name"
+	  private :no  #it will shoow the values because private is enable by default
+	- name : user_name
+	  prompt : "enter user_name"
+	  private : no  #it will shoow the values because private is enable by default
+	tasks:
+	 - name:create user
+	   user : name={{user_name}} state=present
+	 - name: create package
+	   yum : name={{package_name}} state=latest
+	   
+ansible-playbook first.yml-->to execute playbook and prompt will come.
+please enter your package_name:telnet
+enter user_name:demo_user
+
+Passing varibles during execution:
+-----------------------------------
+ansible-playbook -e "package_name='telnet' user_name='demo_user'" first.yml
+
+calling varibles from another file:
+-----------------------------------
+vardemo:
+---------
+package_name : git
+user_name : devops_user
+
+File-2:
+--------
+- name :create package
+  hosts : all
+  vars_file :
+  - "./vardemo.yml"
+  tasks:
+   - name:create user
+	   user : name={{user_name}} state=present
+	 - name: create package
+	   yum : name={{package_name}} state=latest
+	 
+Define varibles from Inventory file:
+--------------------------------------
+Go to /etc/ansible/hosts
+[all:vars]
+package_name = git
+
+working with multiple tasks and tags:
+-------------------------------------
+Example:
+- name : installing OS
+  hosts : all
+  tasks :
+   - name :installing package redhat servers
+     yum : name=httpd state=latest
+	 when : ansible_os_family == "redhat"
+	 tags : testredhat   #to execute that particular task
+	 ignore_errors : true  #it will ignore the above task is failed and will proceed to next task.
+   - name : installing package ubuntu servers
+     apt : name=httpd state=latest
+	 when : ansible_os_family == "ubuntu"
+	 tags : testubuntu  #to execute that particular task
+	 notify : restart httpd 
+   - name : restarting service
+     service : name=httpd state=running
+   handlers : 
+   - name : restart httpd 
+     service : 
+	   name :httpd
+	   state : started
+   
+	   
+ansible-playbook osplayabook.yml --tags task2 -->it will execute testubuntu only.
+
+Example:
+- name:creating LVM
+  hosts: all
+  become : true  #should be "sudo" user to execute task
+  become_method : sudo
+  become_user :root
+  remote_user : devops 
+  vars_prompt:
+   - name
+  tasks:
+   -name : 
+
+Example:
+---------
+- name: file copy
+  hosts: all
+  tasks
+   - name : create directory
+     file : name=/root/vbk state=directory
+   - name :copying files from master to slaves
+     copy : src=/root/ansible-playbook/test.yml dest=/root/vbk  mode=644 owner=balakrishna
+   - name : copying files from slaves to master
+     fetch : src=/root/vbk/test.yml dest=/root/ansible-playbook mode=644 owner=root
+	 tags : testcopy
+	 
+ansible-playbook --tags testcopy -->it will only copy files from slaves to master.
+
+Example:
+--------
+- name : using tags
+  hosts: all
+  tasks:
+   - name :creating users using with_items loop
+     user : name={{item}} state=present
+	 with_items : 
+	  - user1
+	  - user2
+	  - user3
+Example:
+--------
+- name : jinja file
+  hosts : all
+  tasks:
+   - name : install httpd
+     yum : name=httpd state=latest
+	 name : starting httpd
+	 service : name=httpd state=started
+      - name : copying index.html 
+        copy : src=/root/ansible_playbooks/index.html.j2 dest=/var/www/html/
+		 - name :restart httpd
+		   service : name= httpd state=restarted
+		   tags : restart
+		   
+ansible-playbook jinja.yml --tags restart
+
+ansible roles:
+--------------
+ansible-galaxy init -->to initiate ansible roles
+
+	 
+
+	 
+
+
+
+
+  
+
+
+

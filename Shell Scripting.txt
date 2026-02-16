@@ -15,7 +15,7 @@ Common shebangs:
 #!/usr/bin/env bash
 #!/bin/sh
 #!/bin/dash(Ubuntu/Debian)
-#!/bib/ksh(AIX/Solaris)
+#!/bin/ksh(AIX/Solaris)
 
 Difference b/w #!/bin/sh and #!/bin/bash:
 ========================================
@@ -38,7 +38,7 @@ cat /etc/shells -->we can see what all shells configured in machine.
 How to run a script in debug mode:
 ==================================
 #!/bin/bash
-echo"hello"
+echo "hello"
 echo"how r u"
 date
 set -x
@@ -49,7 +49,8 @@ uname
 
 sh hello.sh 
 
-set -x and set +x are used to run specific commands in whole script.
+set -x → enable debug mode 
+set +x → disable debug mode
 
 Comments:
 =========
@@ -194,7 +195,7 @@ fi
 if [$a -ne $b]; then       #!=
 	echo "a is not equal to b"
 fi
-if [$a gt $b];then         #>
+if [$a -gt $b];then         #>
 	echo "a is greater than b"
 fi
 if [$a -lt $b]; then       #<
@@ -310,7 +311,7 @@ else
 fi
 Example:
 #!/bin/bash
-a-20
+a=20
 if [$a -eq 10]; then
 	echo"value of a is 10"
 elif [$a -eq 20]; then
@@ -408,7 +409,7 @@ done
 Example:
 #!/bin/bash
 i=1
-until [$i =gt 5]
+until [$i -gt 5]
 do 
    echo $i 
    i=$((i+1))
@@ -456,7 +457,7 @@ Arrays work only in Bash
 Declaring arrays:
 ------------------
 1.Implicit declaration:u can assign values to indexed positions
-name_array==("kk" "sai" "ram")
+name_array=("kk" "sai" "ram")
 
 2.explicit declaration:u can assign values via built in command.
 declare -a name_array
@@ -532,7 +533,7 @@ File Descriptors:
 1 --->std o/p 
 2 --->std error
 2>&1 -->redirects standard error (stderr) to standard output (stdout).
-
+===========
 Exit codes:
 ===========
 0 to 127
@@ -650,3 +651,97 @@ Output:
 Inside function: 10
 Outside function:
 ✔ x exists only inside the function
+
+==========
+DATATYPES:
+==========
+Shell scripting does not have strict datatypes; all variables are strings, 
+but integers, arrays, and booleans are handled logically during execution
+1.String:
+---------
+Most common datatype in shell.
+Definition:
+A sequence of characters.
+Example:
+name="V"
+city="Delhi"
+echo "My name is $name and I live in $city"
+
+✔ Quotes are optional if no spaces
+✔ With spaces → quotes are required
+
+2.Integer(Number):
+-------------------
+Shell supports integers only (no floats by default).
+Example:
+a=10
+b=20
+sum=$((a + b))
+echo $sum
+
+⚠️ No decimal values like 3.14 (unless using tools like bc)
+
+3.Float:
+---------
+Shell itself does NOT support floats, but you can handle them using external commands.
+Example using bc:
+result=$(echo "3.5 + 2.1" | bc)
+echo $result
+
+Key Points::
+============
+Shell is loosely typed
+Everything is treated as string internally
+Numbers are handled during evaluation
+Booleans rely on exit codes
+Arrays are bash-specific.
+
+===========
+COLOR CODES:
+============
+In shell scripting, colors are added using ANSI escape codes.
+syntax:
+echo -e "\e[<code>mTEXT\e[0m"
+
+\e[ or \033[ → start color
+<code> → color code
+m → color mode
+\e[0m → reset to default color (important)
+
+colors with codes:
+-------------------
+Black   → 30
+Red     → 31
+Green   → 32
+Yellow  → 33
+Blue    → 34
+Magenta → 35
+Cyan    → 36
+White   → 37
+Reset   → 0
+
+Example:
+-------
+RED='\e[31m'
+GREEN='\e[32m'
+YELLOW='\e[33m'
+BLUE='\e[34m'
+NC='\e[0m'   # No Color
+
+echo -e "${GREEN}Build Successful${NC}"
+echo -e "${RED}Build Failed${NC}"
+
+Example-2:
+----------
+#!/bin/bash
+
+SUCCESS='\e[1;32m'
+ERROR='\e[1;31m'
+RESET='\e[0m'
+
+if [ -f file.txt ]
+then
+  echo -e "${SUCCESS}File exists${RESET}"
+else
+  echo -e "${ERROR}File not found${RESET}"
+fi
