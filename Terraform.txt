@@ -1,0 +1,284 @@
+===========
+Terraform:
+===========
+Infrastructure as a code(IaaC) tool
+Crossplane,pulumi,cloudformation(AWS),Azure Resource Manager(ARM) etc are other Iaac tools.
+
+why Terraform:
+---------------
+1.Multi-Cloud Supports AWS, Azure, Google Cloud and even on-premises infrastructure.
+2.Hashicorp is the inventor of terraform and uses HashiCorp Configuration Language (HCL).
+3.Terraform can be integrated with other DevOps and automation tools, such as Docker, Kubernetes, Ansible, and Jenkins.
+4.Terraform's "plan" and "apply" workflow allows you to preview changes before applying them.
+5.Terraform maintains a state file that tracks the current state of your infrastructure.
+
+Terraform Basic Commands:
+--------------------------
+terraform init -->initializes the Terraform working directory, downloading any necessary provider plugins.
+terraform plan -->Shows the configuration before applying the changes.
+terraform apply -->Creates or updates infrastructure.
+terraform apply -auto-approve -->Auto-approve the changes without prompt.
+terraform destroy -->Deletes all resources defined in the configuration.
+terraform validate -->Checks configuration syntax & correctness.
+terraform show -->Displays current state or plan details.
+
+Key Concepts:
+--------------
+1.Provider:
+------------
+A provider is a plugin for Terraform that defines and manages resources for a specific cloud or infrastructure platform.
+Example:
+--------
+provider "aws" {
+  region = "us-east-1"
+}
+
+resource "aws_instance" "example" {
+  ami = "ami-0123456789abcdef0" # Change the AMI 
+  instance_type = "t2.micro"
+}
+
+Points to Remember:
+--------------------
+✅ Providers connect Terraform to APIs
+✅ Installed via terraform init
+✅ Must be configured before resources
+✅ Support multi-cloud deployments
+✅ Version locking recommended
+
+Multiple Providers:
+--------------------
+multiple providers in one single terraform project. For example,
+
+Create a providers.tf file in the root directory of your Terraform project.
+In the providers.tf file, define the AWS and Azure providers. For example:
+provider "aws" {
+  region = "us-east-1"
+}
+
+provider "azurerm" {
+  subscription_id = "your-azure-subscription-id"
+  client_id = "your-azure-client-id"
+  client_secret = "your-azure-client-secret"
+  tenant_id = "your-azure-tenant-id"
+}
+
+In your other Terraform configuration files, you can then use the aws and azurerm providers to create resources in AWS and Azure, respectively,
+resource "aws_instance" "example" {
+  ami = "ami-0123456789abcdef0"
+  instance_type = "t2.micro"
+}
+
+resource "azurerm_virtual_machine" "example" {
+  name = "example-vm"
+  location = "eastus"
+  size = "Standard_A1"
+}
+
+Multiple Region Implementation in Terraform:
+--------------------------------------------
+You can make use of alias keyword to implement multi region infrastructure setup in terraform.
+
+provider "aws" {
+  alias = "us-east-1"
+  region = "us-east-1"
+}
+
+provider "aws" {
+  alias = "us-west-2"
+  region = "us-west-2"
+}
+
+resource "aws_instance" "example" {
+  ami = "ami-0123456789abcdef0"
+  instance_type = "t2.micro"
+  provider = "aws.us-east-1"
+}
+
+resource "aws_instance" "example2" {
+  ami = "ami-0123456789abcdef0"
+  instance_type = "t2.micro"
+  provider = "aws.us-west-2"
+}
+
+2.Resource:
+------------
+A resource is a specific infrastructure component that you want to create and manage using Terraform. 
+Resources can include virtual machines, databases, storage buckets, network components,DNS records,Load balancers and more.
+Each resource has a type and configuration parameters that you define in your Terraform code.
+
+Example:
+---------
+resource "aws_instance" "web_server" {
+  ami           = "ami-0abcd1234"
+  instance_type = "t2.micro"
+}
+Example-2:
+-----------
+resource "aws_vpc" "main" {
+  cidr_block = "10.0.0.0/16"
+}
+
+resource "aws_subnet" "subnet1" {
+  vpc_id     = aws_vpc.main.id
+  cidr_block = "10.0.1.0/24"
+}
+3.Configuration file:
+----------------------
+Terraform uses configuration files ( .tf extension) to define the desired infrastructure state. 
+These files specify providers, resources, variables, and other settings.
+Example: main.tf, variables.tf, outputs.tf
+A typical Terraform configuration includes:
+
+✅ Terraform settings
+✅ Provider configuration
+✅ Resources
+✅ Variables (optional)
+✅ Outputs (optional)
+
+Required provides:
+------------------
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+
+  required_version = ">= 1.5.0"
+}
+
+Example:
+--------
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+}
+
+provider "aws" {
+  region = "ap-south-1"
+}
+
+resource "aws_instance" "example" {
+  ami           = "ami-0abcdef12345"
+  instance_type = "t2.micro"
+
+  tags = {
+    Name = "TerraformServer"
+  }
+}
+
+output "instance_ip" {
+  value = aws_instance.example.public_ip
+}
+
+Terraform Statefile:
+---------------------
+Terraform maintains a state file (often named terraform.tfstate) that keeps track of the current state of your infrastructure. 
+This file is crucial for Terraform to understand what resources have been created and what changes need to be made during updates.
+The statefile named as terraform.tfstate extension.
+
+Varibles:
+----------
+Variables in Terraform are essential for parameterizing and sharing values within your Terraform configurations and modules. 
+They allow you to make your configurations more dynamic, reusable, and flexible.
+
+Varible Types:
+----------------
+Syntax:
+---------
+variable "variable_name" {
+  type        = string
+  default     = "value"
+  description = "optional"
+}
+
+String:
+--------
+type = string
+Number:
+-------
+type = number
+Boolean:
+---------
+type = bool
+List:
+------
+variable "availability_zones" {
+  type    = list(string)
+  default = ["ap-south-1a", "ap-south-1b"]
+}
+Map:
+-----
+variable "tags" {
+  type = map(string)
+
+  default = {
+    Name = "Server"
+    Env  = "Dev"
+  }
+}
+1.Input variables:(input.tf)
+----------------------------
+Passing values to the modules or configuration called as input varibles.
+Example:
+---------
+variable "instance_type" {
+  description = "EC2 instance type"
+  type        = string
+  default     = "t2.micro"
+}
+
+2.Output varibles:(output.tf)
+------------------------------
+Output variables allow you to prints values from your module or configuration.
+Example:
+---------
+output "root_output" {
+  value = module.example_module.example_output
+}
+Terraform tfvars:(.tfvars)
+--------------------------
+In Terraform, a .tfvars file is used to assign values to variables defined in your Terraform configuration.
+It allows you to keep values separate from code, making configurations reusable and environment-specific.
+
+Here's how you typically use .tfvars files,
+1.Define your input variables in your Terraform code (e.g., in a variables.tf file).
+2.Create one or more .tfvars files, each containing specific values for those input variables.
+3.When running Terraform commands (e.g., terraform apply, terraform plan), you can specify which .tfvars file(s) to use with the -var-file option:
+terraform apply -var-file=dev.tfvars
+
+Key Points:
+------------
+✅ Variables make configs reusable
+✅ Defined using variable block
+✅ Access using var.<name>
+✅ Values set via tfvars, CLI, env vars
+✅ Supports multiple data types
+✅ Sensitive flag protects secrets
+
+Conditional Expressions:
+------------------------
+Conditional expressions in Terraform are used to define conditional logic within your configurations. 
+They allow you to make decisions or set values based on conditions
+Syntax:
+--------
+condition ? true_val : false_val
+
+condition is an expression that evaluates to either true or false.
+true_val is the value that is returned if the condition is true.
+false_val is the value that is returned if the condition is false.
+
+Example:
+---------
+resource "aws_instance" "example" {
+  count = var.create_instance ? 1 : 0
+
+  ami           = "ami-XXXXXXXXXXXXXXXXX"
+  instance_type = "t2.micro"
+}

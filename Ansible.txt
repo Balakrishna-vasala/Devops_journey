@@ -53,6 +53,7 @@ Ansible:
 Ansible is an open-source configuration management, automation, and orchestration tool used to:
 Configure servers
 Deploy applications
+Network automation
 Automate repetitive IT tasks
 
 It is simple, agentless, and push-based, which makes it very popular in DevOps.
@@ -76,72 +77,138 @@ Managed Nodes:
 Servers being managed
 Only need SSH access + Python
 
-Inventory:
------------
+Inventory:(/etc/ansible/)
+-----------------------------
 List of managed nodes that are connected.
 Can be static or dynamic
 
-Authentication requirements:
-protocol
-port
-username
-password
+Password-less authentication:
+-----------------------------
+option-1:
+----------
+ssh-copy-id -f "-o identityfile /downloads/bala.pem" ec2-user@172.32.78.51 -->passwordless authentication.
+ssh -o 'identityfile /downloads/bala.pem' ec2-user@172.32.78.51 -->passwordless authentication step 2
+ssh ec2-user@172.32.78.51 --> to connect server 
 
+option-2:
+----------
+ssh -i /downloads/bala.pem ec2-user@172.32.78.51 -->passwordless authentication.
+go to /etc/ssh/sshd_config -->uncomment password authentication-->uncomment permit root login 
+passwd root -->reset password of root user
+systemctl restart sshd -->restart sshd
+ssh-copy-id root@172.32.78.51 -->access the server.
+
+ansible-inventory:
+-------------------
+we can write inventoty files in 2 ways like inventory.ini or yaml file.
+cat  /etc/ansible/anisble_config -->stored all ansible config info
+cat /etc/ansible/hosts -->all hosts info present here(inventory.ini)
+
+Ansible-adhoc commands:
+------------------------
+ansible -i inventory.ini -m ping all -->to ping the managed nodes   # -m means modules/collections
+ansible -i inventory.ini -a "uptime" all -->to check uptime of managed nodes  #a means arguments
+ansible -a "yum install httpd -y " all -->to install httpd
+ansible -m yum -a "name=nginx" "state=absent" all -->to delete the packges from ansible modules..
+ansible -m setup localhost -->properties fetched from server.
 ansible all -i 172.31.26.110, -e ansible_user=ec2-user -e ansible_password=devops321 -m ping -->connect to node and perform operations.
--m -->modules/collections
 ansible all -i 172.31.26.110, -e ansible_user=ec2-user -e ansible_password=devops321 -b -m dnf -a "name=nginx state=installed" -->to install nginx with root 
+ansible -i inventory.ini -m shell -a "sudo ls /etc/" all -->it will list out files in /etc.
+
 
 YAML-Yet Another Markup Language:
 ----------------------------------
-- name: "balakrishna"
-  dob: "1999-05-10"
-  mobilenumber: "123456789"
-  address:
-   - d/no: "5-12"
-     street: "whiterose layout"
-	 area: "whitefield"
-	 city: "bangalore"
+YAML is a human readable data serialization foramt that is commanly used for configuration files
+and data exchange between languages with different data structures.
+YAML syntax:
+-----------
+strings,numbers and booleans:
+-----------------------------
+string:Hello,world!
+number:42
+boolean:true
+
+List:
+------
+fruits:
+ - apple
+ - orange
+ - banana
+
+Dictionary:
+-----------
+Person:
+  name: john
+  age: 30
+  city: new york
+  
+Example:
+---------
+---
+ name: balakrishna
+ age: 26
+ occupation: youtuber
+ category: education
+ content:
+  - devops
+  - cloud
+  - python
+ address:
+  street: whitefield
+  state: KA 
+  country: india
 	 
 	 
 Example-1:
 ----------
-- name: ping the server
-  hosts: web
-  tasks: 
-  - name: ping the web server
-    ansible.buitin.ping:
-	
+- name: update web servers
+  hosts: web servers
+  remote_user: root
+  tasks:
+   - name:install apache
+     ansible.builtin.yum:  #this is module
+	   name:httpd
+	   state: latest
+	- name: apache config file
+	  ansible.builtin.template:  #this is module
+	    src: /srv/httpd.j2
+		dest: /rtc/httpd.conf
+- name:update DB servers
+  hosts: db servers
+  remote_users: root
+  tasks:
+   - name:install postgresql
+     ansible.builtin.yum:     #this is module
+	 name: postgresql
+	 state: latest
+   - name:start postgresql 
+     ansible.builtin.service:    #this is module
+	  name: postgresql
+	  state: started
+	 
 to execute above playbook use below command.
-ansible-playbook -i inventory.ini -e ansible_user=ec2-user -e ansible_password=DevOps321 01-playbook.yaml
+ansible-playbook -i inventory.ini 01-playbook.yaml
 
 Example-2:
-----------
-- name: Hello World
-  hosts: web
-  tasks: 
-  - name: print hello world
-    ansible.buitin.debug:
-	
-ansible-playbook -i inventory.ini -e ansible_username=ec2-user -e ansible_password=DevOps321 02-playbook.yaml
-
-Example-3:
 -----------
-- name: install and run nginx
-  hosts: web
-  become: s
+- name: install and run apache
+  hosts: all
+  become: true
   tasks:
   - name: install nginx
-     ansible.builtin.pacakge:
-	  name:nginx
+     ansible.builtin.yum:
+	  name:apache2
 	  state: present
-  - name: satrt nginx
-     ansible.builtin.service:
-	   name: nginx
-	   state:started
-	   enabled: yes
+  - name: copy file with owner permissions
+     ansible.builtin.copy:
+	   src: index.html
+	   dest: /var/www/html
+	   owner: root
+	   group: root
+	   mode: '0644'
 	   
-	  
-ansible-playbook -i inventory.ini -e ansible_username=ec2-user -e ec2-user_password=DevOps321 03-playbook.yaml
+ansible-playbook -i inventory.ini 02-playbook.yaml
+
 
 Varibles:
 ----------
@@ -181,15 +248,6 @@ ansible-playbook site.yml -f 20
 3. Ad-hoc command
 ansible all -m ping -f 10
 
-Ansible addhoc commands:
-------------------------
-ansible -m ping all -->to ping the slave nodes
-ansible -a "uptime" all -->to check uptime of slave nodes
-ansible -a "yum install httpd -y " all -->to install httpd
-ansible -m yum -a "name=nginx" "state=absent" all -->to delete the packges from ansible modules.
-cd /etc/ansible -->stored all ansible config info
-cat /etc/ansible/hosts -->all hosts info present here.
-ansible -m setup localhost -->properties fetched from server.
 
 YAML Playbooks:
 ----------------
