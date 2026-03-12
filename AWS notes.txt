@@ -1,0 +1,282 @@
+What is Cloud?
+===============
+Cloud computing means storing data and running applications on servers on the internet instead of your local computer.
+Instead of buying and maintaining physical hardware, you use services provided by cloud providers
+Public Cloud:
+==============
+A Public Cloud is a cloud environment where services are provided over the internet and shared among multiple users or organizations.
+Examples:
+----------
+Amazon Web Services
+Microsoft Azure
+Google Cloud
+
+Example Scenario:
+-----------------
+A startup hosts its website on AWS instead of buying servers.
+
+Private Cloud:
+==============
+A Private Cloud is a cloud environment used by only one organization.
+The infrastructure is not shared with other companies.
+
+Examples:
+---------
+OpenStack
+VMware vSphere
+
+Simple Example:
+-----------------
+Public Cloud → Renting a room in a hotel 🏨
+Private Cloud → Owning your own house 🏠
+
+=====================================
+IAM (Identity and Access Management):
+======================================
+Authentication:
+---------------
+Authentication is the process of verifying the identity of a user or system.
+Common authentication methods:
+-----------------------------
+Username and Password
+Access keys / API keys
+Multi-Factor Authentication (MFA) (OTP, authenticator apps)
+Biometric verification (fingerprint, face ID)
+
+Authorization:
+---------------
+Authorization is the process of determining what actions a user is allowed to perform after they are authenticated.
+Example:
+---------
+After logging in to Amazon Web Services IAM:
+User A may only view S3 buckets
+User B may create and delete EC2 instances
+
+Even though both users are authenticated, their authorizations are different.
+=====
+IAM
+=====
+IAM (Identity and Access Management) in Amazon Web Services is a service used to securely control access to AWS resources.
+It helps you manage who can access AWS and what actions they can perform.
+
+With IAM you can:
+Create users and groups
+Assign permissions
+Control access to services like Amazon EC2 and Amazon S3
+Enable secure login with MFA
+
+1.IAM Users:
+--------------
+An IAM User is a person or application that needs access to AWS.
+
+Example:
+Admin user
+Developer user
+Application user
+
+Each user can have:
+Password (for AWS console login)
+Access keys (for CLI or API access)
+
+2.IAM Groups:
+---------------
+An IAM Group is a collection of IAM users.
+Instead of assigning permissions to each user, you assign them to the group.
+
+Example:
+---------
+Admins
+Developers
+Testers
+
+Benefits:
+Easier permission management
+Role-based access
+
+3.IAM Policy:
+--------------
+A Policy is a JSON document that defines permissions.
+
+It specifies:
+Effect → Allow / Deny
+Action → What action is allowed
+Resource → Which AWS resource
+
+Example:
+--------
+{
+ "Version": "2012-10-17",
+ "Statement": [
+   {
+     "Effect": "Allow",
+     "Action": "ec2:StartInstances",
+     "Resource": "*"
+   }
+ ]
+}
+
+4.IAM Role:
+-----------
+An IAM Role is used when AWS services need permissions.
+Instead of assigning permissions to users, a service assumes a role.
+
+Example:
+EC2 accessing S3
+Lambda accessing DynamoDB
+
+Example:
+EC2 Instance → IAM Role → Access S3 bucket
+
+AWS Account
+     │
+     ├── IAM Users
+     │     ├── Dev1
+     │     └── Dev2
+     │
+     ├── IAM Groups
+     │     └── Developers
+     │
+     ├── IAM Policies
+     │     └── EC2FullAccess
+     │
+     └── IAM Roles
+           └── EC2-S3-Access
+		   
+===========================
+Elastic Cloud Compute(EC2)
+===========================
+Amazon EC2 (Elastic Compute Cloud) is a service provided by Amazon Web Services that allows you to create and run virtual servers in the cloud. 
+These virtual servers are called EC2 instances.
+Simple Definition:
+------------------
+EC2 = Virtual computer (server) in the AWS cloud that you can start, stop, and manage whenever you want.
+Instead of buying physical servers, you rent computing power from AWS.
+
+Key Features of EC2:
+--------------------
+1.Virtual Servers (Instances):
+Launch servers with different CPU, RAM, and storage configurations.
+
+2.Scalability
+Increase or decrease the number of servers based on demand.
+
+3.Pay-as-you-go Pricing
+Pay only for the time you use the instance.
+
+4.Multiple Operating Systems
+Run Linux, Windows, Ubuntu, Red Hat, etc.
+
+5.Security
+Uses AWS Security Groups and AWS Identity and Access Management to control access.
+
+Region VS Avaialability Zones:
+==============================
+A Region is a geographical area where Amazon Web Services has multiple data centers.
+Each region is independent and located in different parts of the world.
+
+Examples:
+---------
+US East (N. Virginia)
+Asia Pacific (Mumbai)
+Europe (London)
+
+Key Points:
+-----------
+Region = Large geographic location
+Each region contains multiple Availability Zones
+Data in one region does not automatically replicate to another
+Used for low latency and compliance
+
+📌Example:
+If users are mostly in India, companies often choose Asia Pacific (Mumbai) region for better performance.
+
+Availability Zone (AZ):
+========================
+An Availability Zone (AZ) is one or more data centers inside a region.
+Each AZ is:
+Physically separate
+Connected with high-speed networking
+Designed for high availability
+
+📌 Example:
+Inside Asia Pacific (Mumbai) region there are multiple AZs like:
+ap-south-1a
+ap-south-1b
+ap-south-1c
+
+Key Points:
+-----------
+AZ = Data center or group of data centers
+Used for fault tolerance
+Applications can run in multiple AZs for high availability
+
+Simple Example:
+----------------
+Region → Country / Area
+Availability Zone → Data Center
+
+Important EC2 Components:
+--------------------------
+1.Instance
+A virtual machine running in AWS.
+
+Example:
+t2.micro
+t3.medium
+m5.large
+
+2.AMI (Amazon Machine Image)
+A template used to launch EC2 instances.
+It contains:
+Operating system
+Applications
+Configuration
+
+Example: Ubuntu AMI, Amazon Linux AMI.
+
+3.Instance Type
+Defines the CPU, RAM, network capacity, and storage of the EC2 instance.
+
+Categories:
+General Purpose – Balanced resources (t2, t3)
+Compute Optimized – High CPU
+Memory Optimized – High RAM
+Storage Optimized – High disk performance
+
+4.Key Pair
+Used to securely connect to EC2 using SSH.
+Public key → stored in AWS
+Private key → stored on your computer
+
+5.Security Group
+Acts as a virtual firewall for EC2 instances.
+
+Controls:
+Inbound traffic (incoming)
+Outbound traffic (outgoing)
+
+Example rules:
+--------------
+Allow SSH (port 22)
+Allow HTTP (port 80)
+Basic EC2 Workflow
+Login to AWS Console
+Go to EC2 Dashboard
+Click Launch Instance
+Select AMI (Operating System)
+Choose Instance Type
+Configure Security Group
+Create/choose Key Pair
+Launch the instance
+Then connect using SSH or RDP.
+
+Example Use Cases:
+-----------------
+Hosting websites
+Running applications
+Testing environments
+Big data processing
+DevOps automation
+
+✅ Example:
+If you want to host a website, you can launch an EC2 instance, install Apache or Nginx, and deploy your application.

@@ -6,7 +6,7 @@ Crossplane,pulumi,cloudformation(AWS),Azure Resource Manager(ARM) etc are other 
 
 why Terraform:
 ---------------
-1.Multi-Cloud Supports AWS, Azure, Google Cloud and even on-premises infrastructure.
+1.Multi-Cloud Supports like AWS, Azure, Google Cloud and even on-premises infrastructure.
 2.Hashicorp is the inventor of terraform and uses HashiCorp Configuration Language (HCL).
 3.Terraform can be integrated with other DevOps and automation tools, such as Docker, Kubernetes, Ansible, and Jenkins.
 4.Terraform's "plan" and "apply" workflow allows you to preview changes before applying them.
@@ -182,6 +182,14 @@ Terraform Statefile:
 Terraform maintains a state file (often named terraform.tfstate) that keeps track of the current state of your infrastructure. 
 This file is crucial for Terraform to understand what resources have been created and what changes need to be made during updates.
 The statefile named as terraform.tfstate extension.
+
+.tf file == actual infra == state file
+
+Remote state:
+-------------
+Remote state in Terraform is the practice of storing the Terraform state file in a shared backend
+like S3, Terraform Cloud, or Azure Storage to enable collaboration, locking, and secure infrastructure management.
+
 
 Varibles:
 ----------
