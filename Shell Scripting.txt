@@ -56,7 +56,7 @@ Comments:
 =========
 Comments are generally improves the readbaility of the code.
 # -->used for single line comments.
-echo "hello world" #it prints hello world -->Inline comments are used beside the code or middle of the code.
+echo "hello world" #it prints hello world -->Inline comments --> used beside the code or middle of the code.
 <<comments here
 ......
 ......

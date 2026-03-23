@@ -259,7 +259,9 @@ Example rules:
 --------------
 Allow SSH (port 22)
 Allow HTTP (port 80)
-Basic EC2 Workflow
+
+Basic EC2 Workflow:
+--------------------
 Login to AWS Console
 Go to EC2 Dashboard
 Click Launch Instance
@@ -280,3 +282,124 @@ DevOps automation
 
 ✅ Example:
 If you want to host a website, you can launch an EC2 instance, install Apache or Nginx, and deploy your application.
+
+===========================
+Virtual Private Cloud(VPC)
+===========================
+A VPC in Amazon Web Services is a logically isolated network where you can launch and manage your cloud resources securely.
+A VPC is like your own private data center in the cloud.
+
+🔹Key Components of a VPC
+1.Classless Inter-Domain Routing(CIDR)Block(IP Range):
+------------------------------------------------------
+Defines the IP address range of your VPC
+Example: 10.0.0.0/16
+all IPs from 10.0.0.0 to 10.0.255.255
+
+2.subnets:
+----------
+A subnet defines a range of IP addresses in your VPC.You can launch AWS resources into a subnet that you select.
+Each subnet must reside entirely within one Availability Zone and cannot span zones
+private subnet:
+---------------
+should be used for resources that won’t be accessible over the Internet.
+public subnet:
+--------------
+should be used for resources that will be accessed over the Internet.
+
+3.Internet Gateway (IGW):
+-------------------------
+Allows communication between VPC and the internet
+
+4.Route Table:
+--------------
+A Route Table in a VPC is used to control how network traffic is directed within your VPC and outside it
+A Route Table is a set of rules (called routes) that determine:
+👉 Where your network traffic should go
+Each route has:
+Destination (IP range)
+Target (where to send traffic)
+Example:
+10.0.0.0/16 → Local
+→ Traffic inside VPC stays within VPC
+0.0.0.0/0 → IGW
+→ All internet traffic goes to Internet Gateway
+
+Types of Route Tables:
+----------------------
+1.Main Route Table:
+-------------------
+Default route table created with VPC
+Automatically associated with all subnets (unless changed)
+
+2.Custom Route Table:
+---------------------
+Created by user
+Can be associated with specific subnets
+
+🔹Route Table Targets:
+----------------------
+Internet Gateway (IGW) → Internet access
+NAT Gateway → Internet for private subnet
+VPC Peering → Connect two VPCs
+Virtual Private Gateway → VPN connection
+
+5.NAT Gateway:
+--------------
+A NAT Gateway is a service that allows instances in a private subnet to access the internet, while preventing the internet from directly accessing them.
+It acts as a middleman between:
+Private subnet (no internet access)
+Internet
+So:
+✅ Outbound traffic → allowed (e.g., software updates)
+❌ Inbound traffic → blocked (no direct access from internet)
+
+🔹How NAT Gateway Works
+Private EC2 sends request (e.g., to download updates)
+Route table sends traffic → NAT Gateway
+NAT Gateway sends request → Internet
+Response comes back → NAT Gateway → EC2
+
+6.Security Groups:
+------------------
+A Security Group (SG) controls Inbound (incoming) and Outbound (outgoing) traffic for resources inside a VPC.
+->Works at instance level
+->Only allows permitted traffic
+->Everything else is denied by default
+🔹Key Features:
+----------------
+✅ Stateful
+If you allow inbound traffic → response is automatically allowed
+No need to create separate outbound rules
+✅ Allow Rules Only
+You can only allow traffic
+No explicit “deny” rules
+✅ Attached to Resources
+Used with:
+EC2 instances
+Load balancers
+Databases
+
+7.NACL(Network Access Control List):
+------------------------------------
+A Network ACL Controls inbound and outbound traffic for an entire subnet
+->Works at subnet level
+->Acts as an extra layer of security (in addition to Security Groups)
+🔹Key Features:
+---------------
+✅ Stateless
+Inbound and outbound rules are separate
+If you allow inbound traffic → you must also allow outbound response manually
+✅ Allow & Deny Rules
+You can:
+✔️ Allow traffic
+❌ Deny traffic
+✅ Rule Number Order
+Rules are evaluated in order (lowest number first)
+First match → applied immediately.
+
+Simple Way to Remember
+SG = Personal bodyguard (instance-level, smart, remembers you)
+NACL = Security gate (subnet-level, strict, checks every time)
+
+Internet → IGW → Route Table → Subnet → NACL → Security Group → EC2
