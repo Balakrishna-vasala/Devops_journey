@@ -1,0 +1,129 @@
+
+Roles and Responsibilities
+Act as the primary coordinator and single point of contact for Major / High Severity incidents.
+Lead major incident bridges / war rooms to manage critical incidents effectively.
+Ensure timely escalation, communication, and resource engagement to restore services quickly.
+Assess impact and urgency to determine the appropriate level of response.
+Work closely with technical teams, vendors, and stakeholders to troubleshoot and resolve issues.
+Ensure temporary fixes or workarounds are implemented when permanent resolutions require additional time.
+Provide timely updates to senior management, business units, and impacted teams during incidents.
+Communicate complex technical issues clearly and concisely to both technical and non-technical audiences.
+Ensure transparency throughout the incident lifecycle and after resolution.
+Develop and maintain incident reports, metrics, and dashboards to measure response effectiveness.
+Conduct Post-Incident Reviews (PIR) and ensure follow-up actions are tracked to closure.
+Identify recurring issues and collaborate with Problem Management teams for long-term resolution.
+Manage communication channels including email updates, dashboards, and incident summaries.
+Drive rapid incident resolution by coordinating with cross-functional technical teams.
+Manage end-to-end Change Management processes aligned with ITIL best practices.
+Review, assess, and approve all types of changes (Standard, Normal, Emergency).
+Facilitate Change Advisory Board (CAB) and Emergency CAB (eCAB) meetings.
+Ensure proper documentation, risk assessments, impact evaluations, and back-out plans are completed.
+Monitor and report on change success rates, failed changes, and continuous improvement opportunities.
+Maintain a Change Calendar and proactively identify scheduling conflicts or dependencies.
+Collaborate with technical teams to ensure effective planning, testing, and implementation of changes.
+Prepare weekly, monthly, and quarterly reports for Change and Major Incident metrics.
+Track KPIs such as Change Success Rate, Major Incident MTTR (Mean Time to Resolve), Incident Frequency, and related performance measures.
+Identify process gaps, inefficiencies, and opportunities for service improvement.
+Maintain dashboards and communication summaries to monitor service levels and overall performance.
+Reviewing application health checks, including services, server availability, EOD/BOD jobs, and processes. Troubleshooting and resolving issues before business hours
+Utilizing monitoring tools like AppDynamics and Grafana to set up alerts with proper thresholds, minimizing manual monitoring. Assigning, investigating, and resolving alerts, as well as checking error logs and identifying issues.
+Preparing the run books, SOP and KEDB for future reference.
+
+
+1. What is a Major Incident?
+A Major Incident is a high-priority incident that causes significant business impact, service outage, or affects multiple users/customers and requires immediate coordinated response.
+
+2. What will you do first during a P1 incident?
+I will assess impact, open bridge call, engage resolver teams, communicate stakeholders, assign actions, and drive restoration as quickly as possible.
+
+3. How do you manage a bridge call?
+I maintain call discipline, capture timelines, assign owners, request updates, remove blockers, and keep everyone focused on restoration.
+
+4. How do you prioritize incidents?
+Based on Impact + Urgency. High business impact and critical services become P1/P2 incidents.
+
+5. How do you communicate during incidents?
+Provide timely updates through email, Teams, dashboards, and bridge calls with clear ETA, impact, workaround, and next steps.
+
+6. What is MTTR?
+Mean Time to Resolve / Restore service. It measures average time taken to recover from incidents.
+
+7. What is the role of Incident Manager?
+Coordinate teams, manage escalations, drive service restoration, communicate updates, track actions, and lead PIR.
+
+8. How do you handle pressure during outages?
+Stay calm, prioritize actions, communicate clearly, assign tasks quickly, and focus on restoration.
+
+9. What if teams are not responding?
+Escalate immediately through management matrix, follow on-call process, and engage alternate contacts.
+
+10. What is PIR?
+Post Incident Review conducted after critical incidents to analyze root cause, lessons learned, and preventive actions.
+
+11. What is Change Management?
+A structured process to control IT changes with minimal risk and business disruption.
+
+12. Types of Changes?
+
+Standard Change
+Normal Change
+Emergency Change
+
+13. What is Standard Change?
+Low-risk, pre-approved, repeatable change like password reset or routine patching.
+
+14. What is Normal Change?
+Requires risk review, approvals, planning, and CAB approval before implementation.
+
+15. What is Emergency Change?
+Urgent change required to restore service or fix critical risk quickly.
+
+16. What is CAB?
+Change Advisory Board reviews significant changes for risk, impact, and approval.
+
+17. What is eCAB?
+Emergency CAB used for urgent changes requiring quick approval.
+
+18. What is Backout Plan?
+Rollback steps to restore previous state if change fails.
+
+19. What is Change Freeze?
+Restricted period where changes are limited during peak business events or critical times.
+
+20. What is Change Success Rate?
+Percentage of successfully implemented changes without incidents or rollback.
+
+21. A server outage impacts users globally. What do you do?
+Declare major incident, start bridge, engage infra/app/network teams, communicate impact, track progress, and restore service.
+
+22. Change failed in production. What next?
+Initiate backout plan, restore services, inform stakeholders, create incident if needed, and review failure cause.
+
+23. Users are angry due to outage. How do you manage?
+Acknowledge impact, provide transparent updates, share workaround if available, and focus on resolution.
+
+24. Two teams blame each other during bridge call. What will you do?
+Refocus call on restoration, assign facts-based troubleshooting, avoid blame, and address ownership later in PIR.
+
+25. No ETA from technical team. What update will you send?
+Share current status, actions in progress, impacted services, next update time, and ongoing investigation.
+
+26. Which KPIs do you track?
+MTTR, incident volume, SLA compliance, repeat incidents, change success rate, failed changes.
+
+27. How do you reduce recurring incidents?
+Trend analysis, problem tickets, RCA, automation, preventive monitoring, and permanent fixes.
+
+28. How do you prepare management reports?
+Use weekly/monthly dashboards with incidents, outages, MTTR, changes, risks, trends, improvements.
+
+29. Why should we hire you?
+I have experience managing critical incidents, stakeholder communication, ITIL processes, change management, and driving quick service restoration under pressure.
+
+30. Why do you want this role?
+I enjoy fast-paced environments, solving business-critical issues, coordinating teams, and improving service reliability.
+
+
+
+
+

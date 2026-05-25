@@ -3,10 +3,17 @@ ssh -i <private-key>   user-name@ip -->to connect server manually.
 ssh -i bala ec2-user@54.159.73.235 
 scp -i <private-key> file-name ec2-user@ip:/home/ec2-user/bala/ -->copy files from one server to another server.
 ssh ec2@172.54.92.21 'touch bala.txt' -->to create file without login to the server by connecting remote.
+rsync -avz -e "ssh -i bala" vbk ec2-user@54.243.17.57:/home/ec2-user/ -->to transfer large files
+rsync -avz -e "ssh -i bala" myfolder/ ec2-user@54.243.17.57:/home/ec2-user/  -->transfer the folders from server1 to server2
+rsync -avz -e "ssh -i bala" ec2-user@54.243.17.57:/home/ec2-user/vbk . -->transfer the folders from server2 to server1
+-a → archive (keeps permissions)
+-v → verbose (shows progress)
+-z → compress (faster over network)
+
 
 To connect the server with passwordless:
 /etc/ssh/sshd_config -->uncomment permit root login -->uncomment password authentication -->reset password of root user -->access the server
-ssh-copy-id root@pub.ip -->to connrct server
+ssh-copy-id root@pub.ip -->to connect server
 
 Absolute path -->Full path like from scratch
 Relative path -->Current path 

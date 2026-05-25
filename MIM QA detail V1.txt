@@ -1,0 +1,369 @@
+1. What is a Major Incident?
+
+A Major Incident is a high-priority incident that causes significant business impact and requires immediate attention. It usually affects critical applications, infrastructure, or a large number of users. Examples include production outages, payment failures, network downtime, or system unavailability.
+
+The objective of Major Incident Management is to restore services as quickly as possible while minimizing business impact. Unlike normal incidents, major incidents require faster escalation, senior management visibility, bridge calls, and continuous stakeholder communication.
+
+2. What will you do first during a P1 incident?
+
+During a P1 incident, my first priority is to quickly understand the impact, urgency, and affected services. Once confirmed, I declare a Major Incident and initiate the incident management process.
+
+I immediately open a bridge call / war room and engage all relevant resolver teams such as application, infrastructure, database, cloud, or network teams. Then I assign ownership, start tracking timelines, and ensure technical teams begin troubleshooting immediately.
+
+At the same time, I send the first stakeholder communication including impact, affected services, current status, and next update time. My main focus is service restoration as quickly as possible.
+
+3. How do you manage a bridge call?
+
+Managing a bridge call requires strong coordination and communication. I begin by confirming the incident summary, impacted services, and required teams on the call.
+
+Then I maintain discipline by allowing one speaker at a time and ensuring discussions remain focused on restoration. I ask each technical team for updates, assign actions, track owners, and record timestamps.
+
+I remove blockers by escalating where required and ensure management receives regular updates. Once service is restored, I confirm system stability, communicate resolution, and formally close the bridge.
+
+4. How do you prioritize incidents?
+
+I prioritize incidents based on two key factors: Impact and Urgency.
+
+Impact means how many users, services, or business functions are affected.
+Urgency means how quickly resolution is needed.
+
+For example, if a critical customer-facing application is completely down and many users are impacted, it becomes P1. If only a few users are affected with a workaround available, it may be P3 or P4.
+
+This prioritization helps ensure resources are focused on the most critical issues first.
+
+5. How do you communicate during incidents?
+
+Communication during incidents must be timely, clear, and transparent. I provide regular updates through email, Teams, bridge calls, or dashboards depending on the audience.
+
+Each update typically includes:
+
+Incident summary
+Business impact
+Current progress
+Teams engaged
+Workaround if available
+Estimated next update time
+
+For leadership, I provide concise business-focused updates. For technical teams, I provide detailed status. Effective communication helps reduce confusion and maintain stakeholder confidence.
+
+6. What is MTTR?
+
+MTTR stands for Mean Time to Resolve or Mean Time to Restore. It measures the average time taken to recover services after an incident occurs.
+
+It is a key KPI used in incident management because it reflects how efficiently teams restore services. Lower MTTR indicates faster recovery and stronger operational performance.
+
+As an Incident Manager, I focus on reducing MTTR through faster escalations, quicker coordination, clear ownership, and continuous process improvement.
+
+7. What is the role of an Incident Manager?
+
+The Incident Manager is responsible for leading the end-to-end incident management process during service disruptions.
+
+Key responsibilities include:
+
+Coordinating resolver teams
+Managing escalations
+Leading bridge calls
+Driving rapid restoration
+Communicating stakeholders
+Maintaining incident timelines
+Ensuring SLA adherence
+Conducting PIR after closure
+
+The Incident Manager may not fix the technical issue directly, but ensures the right teams work efficiently to restore services quickly.
+
+8. How do you handle pressure during outages?
+
+During outages, I remain calm, focused, and process-driven. Panic can slow recovery, so I prioritize tasks logically and maintain clear communication.
+
+I break the incident into immediate actions such as engaging teams, assigning owners, gathering facts, and sending updates. I avoid assumptions and focus on data-driven decisions.
+
+My goal is to create structure during chaos, keep teams aligned, and restore services as quickly as possible. Staying composed helps others remain productive too.
+
+9. What if teams are not responding?
+
+If teams are not responding during a critical incident, I act quickly using the escalation matrix. I first contact the assigned on-call engineer, then team leads, managers, and backup contacts if needed.
+
+I clearly communicate business impact and urgency. If delays continue, I escalate to senior management. Meanwhile, I explore alternate teams or SMEs who can assist temporarily.
+
+The objective is to remove delays quickly because response time is critical during major incidents.
+
+10. What is PIR?
+
+PIR stands for Post Incident Review. It is conducted after resolution of a major incident to understand what happened, why it happened, and how to prevent recurrence.
+
+A PIR typically covers:
+
+Incident timeline
+Root cause
+What went well
+What could improve
+Delays or gaps
+Preventive actions
+Ownership and due dates
+
+PIR is very important because it converts incidents into learning opportunities and improves future response effectiveness.
+
+11. What is Change Management?
+
+Change Management is a structured ITIL process used to control and implement changes in the IT environment with minimum risk and disruption to business services.
+
+A change can include server patching, application deployment, firewall updates, database modifications, cloud configuration changes, or infrastructure upgrades.
+
+The main objective of Change Management is to ensure changes are properly reviewed, approved, tested, scheduled, communicated, and implemented successfully. It helps reduce outages caused by unplanned or poorly managed changes.
+
+12. What are the types of changes?
+
+Generally, there are three major types of changes in ITIL:
+
+Standard Change
+
+Pre-approved, low-risk, repeatable, and well-documented changes.
+
+Normal Change
+
+Changes that require assessment, approvals, planning, and CAB review depending on risk.
+
+Emergency Change
+
+Urgent changes required to restore services or fix critical business-impacting issues quickly.
+
+Each organization may also classify changes further based on risk or priority.
+
+13. What is a Standard Change?
+
+A Standard Change is a low-risk, frequently performed, pre-authorized change with a proven implementation process. These changes do not require repeated CAB approval every time because they are already approved in advance.
+
+Examples:
+
+Routine server reboot
+Password reset
+Antivirus signature updates
+Adding approved users to groups
+Scheduled maintenance with no impact
+
+Standard changes save time and improve efficiency while maintaining control.
+
+14. What is a Normal Change?
+
+A Normal Change is any change that is not pre-approved and requires formal review before implementation. It goes through planning, risk assessment, impact analysis, approvals, and scheduling.
+
+Depending on the risk level, it may require CAB discussion.
+
+Examples:
+
+Application release to production
+Database schema changes
+Server migration
+Network reconfiguration
+Storage expansion
+
+Normal changes must be carefully managed to reduce service disruption.
+
+15. What is an Emergency Change?
+
+An Emergency Change is a high-priority change implemented quickly to resolve a critical incident, security vulnerability, or urgent business risk.
+
+Examples:
+
+Production fix for major outage
+Critical security patch
+Urgent firewall block
+Rollback after failed deployment
+
+Although speed is important, emergency changes still require approvals through eCAB and must be documented properly after implementation.
+
+16. What is CAB?
+
+CAB stands for Change Advisory Board. It is a group of stakeholders who review important changes before implementation.
+
+The CAB may include representatives from:
+
+Change Management
+Infrastructure teams
+Application teams
+Security teams
+Business teams
+Operations teams
+
+Their purpose is to assess risk, business impact, dependencies, scheduling conflicts, and readiness before approving or rejecting a change.
+
+17. What is eCAB?
+
+eCAB stands for Emergency Change Advisory Board. It is a smaller, fast-response version of CAB used when urgent approvals are required for emergency changes.
+
+Since emergency changes must happen quickly, eCAB typically includes key decision-makers who can assess risk and approve immediate action.
+
+Examples: major outage fix, urgent security patch, production rollback.
+
+18. What is a Backout Plan?
+
+A Backout Plan (Rollback Plan) is a predefined recovery plan used if a change fails or creates unexpected impact.
+
+It explains how to return the environment to the previous stable state safely and quickly.
+
+Examples:
+
+Revert application version
+Restore database backup
+Reapply old firewall rules
+Restart previous server instance
+
+A strong backout plan is critical because not all changes go as expected.
+
+19. What is Change Freeze?
+
+Change Freeze is a restricted period during which non-essential changes are temporarily stopped to reduce business risk.
+
+It is commonly applied during:
+
+Financial year-end
+Peak sales season
+Holidays
+Large product launches
+Critical business events
+Infrastructure stabilization periods
+
+Only urgent or emergency changes are usually allowed during freeze windows.
+
+20. What is Change Success Rate?
+
+Change Success Rate measures the percentage of changes implemented successfully without causing incidents, rollback, or service disruption.
+
+Formula:
+
+Success Rate = (Successful Changes / Total Changes) × 100
+
+It is an important KPI because it reflects planning quality, testing effectiveness, risk assessment maturity, and operational stability.
+
+As a Change Manager, I would track failed changes, recurring issues, and improvement opportunities to increase success rate over time.
+
+21. A server outage impacts users globally. What do you do?
+
+If a server outage is impacting users globally, my first step is to quickly assess the scope, business impact, and critical services affected. Once confirmed as a high-severity issue, I would declare a Major Incident and initiate the incident management process immediately.
+
+I would open a bridge call / war room and engage all relevant teams such as infrastructure, application, database, network, and cloud teams. I would assign owners for each action item and ensure troubleshooting begins without delay.
+
+At the same time, I would send stakeholder communication explaining the outage, affected services, current actions, and next update timeline.
+
+My focus would be to restore service quickly, whether through failover, restart, rollback, capacity expansion, or workaround. Once resolved, I would confirm service stability, send closure communication, and schedule a Post Incident Review.
+
+22. Change failed in production. What next?
+
+If a production change fails, my immediate priority is business impact reduction and service restoration. I would first assess whether users or services are impacted. If yes, I would initiate incident management and engage the required technical teams.
+
+Next, I would ask the implementation team to execute the approved backout / rollback plan to restore the previous stable state. If rollback is not possible immediately, I would coordinate temporary mitigation steps.
+
+I would communicate status updates to stakeholders and management, including impact, actions in progress, and expected recovery timeline.
+
+Once stabilized, I would review why the change failed—testing gaps, dependency issues, approvals, documentation, or execution error—and ensure lessons learned are captured.
+
+23. Users are angry due to outage. How do you manage?
+
+During outages, frustration from users is natural, especially when business operations are affected. My approach is to remain calm, professional, and empathetic.
+
+First, I would acknowledge the impact and reassure users that the issue is being treated with high priority. Then I would provide clear and honest updates on current progress, teams engaged, workaround availability, and next communication timeline.
+
+I avoid technical jargon when speaking to business users and focus on business impact and expected next steps. Transparent communication usually helps reduce escalation pressure.
+
+At the same time, I continue driving technical teams toward restoration while ensuring users feel informed and supported.
+
+24. Two teams blame each other during bridge call. What will you do?
+
+During a major incident, blame discussions waste valuable recovery time. If two teams begin blaming each other, I would immediately redirect the conversation toward service restoration.
+
+I would remind everyone that the bridge call objective is resolution, not ownership discussion. Then I would assign fact-based troubleshooting tasks to both teams with clear timelines and accountability.
+
+For example, one team checks infrastructure health while the other validates application logs or dependencies.
+
+Once the incident is resolved, ownership, process gaps, and accountability can be addressed during the Post Incident Review. My role is to maintain control, professionalism, and focus during the outage.
+
+25. No ETA from technical team. What update will you send?
+
+If the technical team cannot provide an ETA, I would still send a proactive and transparent update rather than waiting silently.
+
+My communication would include:
+
+Incident is under active investigation
+Relevant technical teams are engaged
+Root cause analysis is in progress
+No confirmed ETA yet
+Next update will be shared at a defined time
+
+Example:
+“We are currently investigating the issue with support teams actively engaged. Service impact continues. At this time, an ETA for restoration is not yet confirmed. We will provide the next update in 30 minutes or sooner if significant progress is made.”
+
+This maintains trust and avoids information gaps while the technical investigation continues.
+
+26. Which KPIs do you track?
+
+As an Incident / Change Manager, I track operational KPIs to measure service performance, response effectiveness, and process maturity.
+
+For Major Incident Management, I track:
+
+MTTR (Mean Time to Resolve/Restore) – Average recovery time after incidents.
+Incident Volume – Number of incidents raised by priority/severity.
+SLA Compliance – Whether incidents were resolved within agreed timelines.
+Repeat Incidents – Recurring issues indicating underlying problems.
+Escalation Count – Number of management or technical escalations.
+
+For Change Management, I track:
+
+Change Success Rate
+Failed Changes
+Emergency Change Percentage
+Rollback Count
+Unauthorized Changes
+
+These KPIs help identify trends, risks, and improvement opportunities.
+
+27. How do you reduce recurring incidents?
+
+Reducing recurring incidents requires moving from reactive support to preventive improvement.
+
+First, I analyze incident trends such as repeated outages, common root causes, frequent applications, or recurring infrastructure failures. Then I work closely with Problem Management and technical teams to create permanent fixes.
+
+Actions may include:
+
+Root Cause Analysis (RCA)
+Automation of manual tasks
+Capacity upgrades
+Monitoring alerts improvements
+Patch management
+Knowledge base updates
+Process corrections
+
+I also track repeat incident metrics monthly to ensure corrective actions are effective.
+
+28. How do you prepare management reports?
+
+Management reports should be clear, concise, and focused on business impact rather than too much technical detail.
+
+I usually prepare weekly or monthly dashboards that include:
+
+Number of incidents by priority
+Major incident summary
+MTTR trends
+SLA performance
+Top recurring issues
+Change success / failed changes
+Risks and action plans
+Improvement initiatives
+
+I use charts, trend lines, and simple summaries so leadership can quickly understand performance and decision areas.
+
+29. Why should we hire you?
+
+You should hire me because I bring a strong combination of incident coordination, stakeholder communication, ITIL process knowledge, and the ability to perform effectively under pressure.
+
+I understand how to manage P1/P2 incidents, lead bridge calls, coordinate cross-functional teams, and restore services quickly while keeping leadership informed. I also have experience in Change Management, reporting, KPI tracking, and continuous improvement.
+
+In addition, I stay calm during critical situations, communicate clearly, and focus on business outcomes. I believe these qualities make me a strong fit for this role.
+
+30. Why do you want this role?
+
+I want this role because it combines problem-solving, leadership, communication, and operational excellence. I enjoy working in fast-paced environments where quick decisions and teamwork directly impact business continuity.
+
+Major Incident / Change Management roles are exciting because they involve handling real-time challenges, coordinating multiple teams, and improving service reliability.
+
+I also see strong career growth in service management and IT operations, and I want to contribute my skills while continuing to learn and grow in a challenging environment.
+
